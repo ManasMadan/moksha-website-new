@@ -11,6 +11,10 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        color1: "#F6CE87"
+      },
+      fontFamily: {
+        firlest: ['Firlest', 'sans-serif'],
       },
     },
   },
