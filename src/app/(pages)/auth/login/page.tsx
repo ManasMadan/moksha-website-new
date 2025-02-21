@@ -79,7 +79,7 @@ export default function LoginPage() {
               className="w-full bg-color1 text-white py-3 rounded-lg font-bold hover:bg-color1/80 transition-colors text-2xl"
             >
               <span className="drop-shadow-[0_2px_4px_rgba(0,0,0,0.4)] filter">
-                SIGN UP
+                SIGN IN
               </span>
             </button>
 
@@ -105,7 +105,7 @@ export default function LoginPage() {
             <p className="text-center text-white font-bold">
               CREATE A NEW ACCOUNT{" "}
               <Link
-                href="/signup"
+                href="/auth/register"
                 className="text-color1 underline underline-offset-[5px] font-[740]"
               >
                 SIGN UP

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Cinzel } from "next/font/google";
-import "../globals.css";
+import "./globals.css";
 
 const cinzel = Cinzel({
   subsets: ["latin"],
