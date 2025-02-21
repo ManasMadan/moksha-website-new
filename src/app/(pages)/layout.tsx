@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cinzel, Geist, Geist_Mono } from "next/font/google";
+import { Cinzel } from "next/font/google";
 import "../globals.css";
 
 const cinzel = Cinzel({

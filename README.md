@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎉 Moksha 2025 Website Development Guide
 
-## Getting Started
+Welcome to the development repository for the **Moksha 2025** website, the annual cultural fest of **Netaji Subhas University of Technology (NSUT)**. Let's work together to create an outstanding online presence for this vibrant event!
 
-First, run the development server:
+## 🚀 Getting Started
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. **Clone the Repository**:
+   ```bash
+   git clone hhttps://github.com/singhdsp/moksha-website-new.git
+   cd moksha-website-new
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **Install Dependencies**:
+   ```bash
+   pnpm install
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. **Start the Development Server**:
+   ```bash
+   pnpm dev
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🌳 Branching Strategy
 
-## Learn More
+To maintain a clean and efficient workflow:
 
-To learn more about Next.js, take a look at the following resources:
+- **Never commit directly to the `main` branch**. Always create a new branch for your feature or fix:
+  ```bash
+  git checkout -b feature/your-feature-name
+  ```
+- **Open a Pull Request (PR)**: Once your work is ready, push your branch and open a PR for review.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🎨 Customizing Tailwind CSS
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+To add new colors to your Tailwind configuration:
 
-## Deploy on Vercel
+1. Open `tailwind.config.ts`.
+2. Extend the theme with your custom colors:
+   ```javascript
+   // tailwind.config.ts
+   import { defineConfig } from 'tailwindcss';
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   export default defineConfig({
+     theme: {
+       extend: {
+         colors: {
+           color1: '#F6CE87', // Example custom color
+           // Add more colors as needed
+         },
+       },
+     },
+     // Other configurations...
+   });
+   ```
+3. Use your custom colors in your components:
+   ```jsx
+   <div className="bg-primary text-color1">
+     {/* Content */}
+   </div>
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+For more details, refer to the [Tailwind CSS Documentation](https://tailwindcss.com/docs/customizing-colors).
+
+## 🛡️ Best Practices
+
+- **Code Reviews**: Ensure all code is reviewed via PRs before merging.
+- **Consistent Commit Messages**: Use clear and descriptive commit messages.
+- **Responsive Design**: Test your changes on various devices to ensure a seamless user experience.
+
+Let's make **Moksha 2025** an unforgettable experience! 🎊 
