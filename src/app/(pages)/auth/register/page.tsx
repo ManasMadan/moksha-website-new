@@ -11,7 +11,7 @@ const koulen = Koulen({
   subsets: ["latin"],
 });
 
-export default function SignUpPage() {
+export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -19,10 +19,10 @@ export default function SignUpPage() {
     <div className="min-h-screen w-full relative bg-black flex items-center justify-center">
       <div className="absolute inset-0 z-0">
         <Image
-          src="/assets/auth/bg.png"
+          src="/assets/auth/registerBg.png"
           alt="Background"
           fill
-          className="object-cover object-right"
+          className="object-cover object-[85%]"
           priority
         />
       </div>
@@ -32,7 +32,9 @@ export default function SignUpPage() {
           <h1 className="text-color1 text-3xl text-center font-semibold">
             SIGN-UP
           </h1>
-          <p className="text-white text-center text-sm mb-8">PLEASE FILL the FORM TO CREATE AN ACCOUNT</p>
+          <p className="text-white text-center text-sm mb-8">
+            PLEASE FILL the FORM TO CREATE AN ACCOUNT
+          </p>
 
           <form className="space-y-6">
             <div className="space-y-2">
@@ -68,16 +70,6 @@ export default function SignUpPage() {
             <div className="space-y-2">
               <label className="text-white uppercase text-sm font-semibold">
                 College Name*
-              </label>
-              <input
-                type="text"
-                className="w-full px-4 py-3 bg-white rounded-lg focus:outline-none text-color1 font-semibold"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-white uppercase text-sm font-semibold">
-                Gender*
               </label>
               <input
                 type="text"

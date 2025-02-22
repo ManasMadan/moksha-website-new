@@ -18,10 +18,10 @@ export default function LoginPage() {
     <div className="min-h-screen w-full relative bg-black flex items-center justify-center">
       <div className="absolute inset-0 z-0">
         <Image
-          src="/assets/auth/bg.png"
+          src="/assets/auth/loginBg.png"
           alt="Background"
           fill
-          className="object-cover object-right"
+          className="object-cover object-[85%]"
           priority
         />
       </div>
