@@ -11,12 +11,12 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        color1: "#F6CE87"
+        color1: "#F6CE87",
+        color2: "#181818",
       },
       fontFamily: {
-        firlest: ['Firlest', 'sans-serif'],
+        firlest: ["Firlest", "sans-serif"],
       },
     },
   },
-  plugins: [],
 } satisfies Config;
