@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Cinzel } from "next/font/google";
 import "./globals.css";
+import NavBar from "@/components/NavBar";
 
 const cinzel = Cinzel({
   subsets: ["latin"],
@@ -21,6 +22,7 @@ export default function RootLayout({
       <body
         className={`${cinzel.className} antialiased`}
       >
+        <NavBar />
         {children}
       </body>
     </html>

@@ -16,7 +16,7 @@ export default function RegisterPage() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   return (
-    <div className="min-h-screen w-full relative bg-black flex items-center justify-center">
+    <div className="min-h-screen w-full relative bg-black flex items-center justify-center pt-12">
       <div className="absolute inset-0 z-0">
         <Image
           src="/assets/auth/registerBg.png"
