@@ -32,15 +32,15 @@ export default function Page() {
         <h1 className="text-center text-white font-firlest text-7xl sm:text-9xl md:text-[145px]">
           Events
         </h1>
-        <div className="w-11/12 max-w-4xl mx-auto my-8 md:my-10 lg:my-12 flex justify-center items-center flex-wrap gap-4 md:gap-8">
+        <div className="w-11/12 max-w-4xl mx-auto my-8 md:my-10 lg:my-12 flex justify-center items-center content-center flex-wrap gap-4 md:gap-8">
           {Array.from({ length: 8 }).map((_, i) => (
-            <CustomButton key={i}>Event {i + 1}</CustomButton>
+            <CustomButton key={i}>Category {i + 1}</CustomButton>
           ))}
         </div>
       </section>
       <section className="w-10/12 mx-auto py-6 pb-16 md:pb-20">
         <div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 justify-center item content-center gap-x-8 gap-y-16 max-w-7xl mx-auto"
+          className="grid justify-center items-center content-center align-middle gap-x-8 gap-y-16 max-w-7xl mx-auto"
           style={{
             gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
           }}
@@ -58,7 +58,7 @@ function CustomButton(props: HTMLAttributes<HTMLButtonElement>) {
   return (
     <button
       {...props}
-      className={`border-2 border-color1 px-4 md:px-6 py-1 text-color text-color1 font-cizel font-semibold rounded-full text-xl md:text-3xl lg:text-4xl ${cizel.className} ${props.className}`}
+      className={`border-2 border-color1 px-4 md:px-6 py-1 text-color text-color1 font-cizel font-semibold rounded-full text-xs sm:text-sm md:text-base lg:text-xl ${cizel.className} ${props.className}`}
     >
       {props.children}
       

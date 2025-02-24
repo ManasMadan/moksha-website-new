@@ -9,11 +9,12 @@ const frameCorner = "/assets/events/frame-corner.png";
 
 function EventCard() {
   return (
-    <div className="bg-color1 w-full h-auto aspect-[9/16] shadow-black shadow-md p-4 relative">
+    <div className="flex justify-center items-center">
+    <div className="bg-color1 w-full h-auto aspect-[9/16] shadow-black shadow-md p-4 relative min-w-64 max-w-80 @container">
       <Frame>
         <div className="w-full h-full flex justify-center flex-col">
           <div className="flex-1 flex justify-center content-center flex-col">
-            <h2 className="font-firlest text-color2 text-center text-4xl mt-2">
+            <h2 className="font-firlest text-color2 text-center text-3xl @[200px]:text-4xl @[250px]:text-5xl"> 
               Event Name
             </h2>
             <div className="my-4 relative w-full aspect-[5/4]">
@@ -26,22 +27,22 @@ function EventCard() {
             </div>
             <ul className={`font-cinzel text-color2 my-2`}>
               <li className="flex items-center space-x-2">
-                <span className="text-xl uppercase font-bold">
-                  Time -{" "}
-                </span>
-                <span className="text-base">10:00 AM</span>
+              <span className="text-xl @[200px]:text-xl @[250px]:text-2xl uppercase font-bold">
+                Time -{" "}
+              </span>
+              <span className="text-base @[200px]:text-lg @[250px]:text-xl">10:00 AM</span>
               </li>
               <li className="flex items-center space-x-2">
-                <span className="text-xl uppercase font-bold">
-                  Venue -{" "}
-                </span>
-                <span className="text-base">Online</span>
+              <span className="text-xl @[200px]:text-xl @[250px]:text-2xl uppercase font-bold">
+                Venue -{" "}
+              </span>
+              <span className="text-base @[200px]:text-lg @[250px]:text-xl">Online</span>
               </li>
               <li className="flex items-center space-x-2">
-                <span className="text-xl uppercase font-bold">
-                  Day -{" "}
-                </span>
-                <span className="text-base">1</span>
+              <span className="text-xl @[200px]:text-xl @[250px]:text-2xl uppercase font-bold">
+                Day -{" "}
+              </span>
+              <span className="text-base @[200px]:text-lg @[250px]:text-xl">1</span>
               </li>
             </ul>
           </div>
@@ -53,6 +54,7 @@ function EventCard() {
         </div>
       </Frame>
     </div>
+  </div>
   );
 }
 
