@@ -33,7 +33,7 @@ const Timeline = () => {
   const totalHeight = 13 + totalItems * 10;
 
   return (
-    <div className="min-h-screen bg-[#131313] px-8 pt-8 pb-44 relative">
+    <div className="min-h-screen bg-[#131313] px-8 pt-24 pb-44 relative">
       <div className="fixed left-5 top-0 w-[0.5px] h-full bg-[#FFFFFF] invisible md:visible" />
       <div className="fixed right-5 top-0 w-[0.5px] h-full bg-[#FFFFFF] invisible md:visible" />
       <div className="fixed right-8 top-0 w-[0.5px] h-full bg-[#FFFFFF] invisible md:visible" />
