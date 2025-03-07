@@ -10,23 +10,27 @@ const cizel = Cinzel({
 export default function Page() {
   return (
     <main className="min-h-screen bg-black w-full relative">
-      <div className="absolute inset-0 z-0 max-h-[3900px]">
-        <Image
-          src="/assets/events/eventsBg.png"
-          alt="Background"
-          fill
-          className="object-cover object-top"
-          priority
-        />
-      </div>
       <div className="absolute inset-0 z-0">
-        <Image
-          src="/assets/events/noise.png"
-          alt="Background"
-          fill
-          className="bg-repeat-y object-fill object-center"
-          priority
-        />
+        <div className="relative w-full h-full">
+          <div className="fixed md:absolute top-0 left-0 right-0 bottom-0 z-0 w-full mx-auto max-h-[3900px]">
+            <Image
+              src="/assets/events/eventsBg.png"
+              alt="Background"
+              fill
+              className="object-cover object-top w-screen"
+              priority
+            />
+          </div>
+          <div className="absolute inset-0 z-0">
+            <Image
+              src="/assets/events/noise.png"
+              alt="Noise Texture"
+              fill
+              className="object-cover object-center mix-blend-overlay opacity-40"
+              priority
+            />
+          </div>
+        </div>
       </div>
       <section className="w-11/12 mx-auto pt-28 relative z-10">
         <h1 className="text-center text-white font-firlest text-7xl sm:text-9xl md:text-[145px]">
@@ -61,7 +65,6 @@ function CustomButton(props: HTMLAttributes<HTMLButtonElement>) {
       className={`border-2 border-color1 px-4 md:px-6 py-1 text-color text-color1 font-cizel font-semibold rounded-full text-xs sm:text-sm md:text-base lg:text-xl ${cizel.className} ${props.className}`}
     >
       {props.children}
-      
     </button>
   );
 }

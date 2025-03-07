@@ -19,26 +19,26 @@ interface SponsorsBlockProps {
 export default function Page() {
   return (
     <main className="min-h-screen bg-black w-full relative">
-      <div className="absolute inset-0 left-0 z-0 max-h-[3900px]">
+      <div className="fixed inset-0 left-0 z-0 w-full mx-auto h-screen">
         <Image
           src="/assets/sponsors/bg.jpg"
           alt="Background"
           fill
-          className="object-fill object-top filter brightness-50 sepia"
+          className="object-cover object-top filter brightness-50 sepia"
           priority
         />
       </div>
       <div className="absolute inset-0 z-0">
         <Image
           src="/assets/events/noise.png"
-          alt="Background"
+          alt="Noise Texture"
           fill
-          className="bg-repeat-y object-fill object-center"
+          className="object-cover object-center mix-blend-overlay opacity-40"
           priority
         />
       </div>
-      <section className="w-11/12 mx-auto pt-28 relative z-10 mb-8">
-        <h1 className="text-center text-white font-firlest text-7xl sm:text-9xl md:text-[145px]">
+      <section className="w-11/12 mx-auto pt-28 relative z-10 mb-4 md:mb-8">
+        <h1 className="text-center text-white font-firlest text-5xl sm:text-9xl md:text-[145px]">
           Our Sponsors
         </h1>
       </section>
@@ -46,10 +46,11 @@ export default function Page() {
         <SponsorsBlock
           key={i}
           title={`Gold Sponsor ${i + 1}`}
-          sponsors={Array.from({ length: (i+1) * 9 }).map((_, j) => ({
+          sponsors={Array.from({ length: (i + 1) * 9 }).map((_, j) => ({
             name: `Gold Sponsor ${i + 1} ${j + 1}`,
             image: dummyImg,
-            className: (j) % 2 === 0 ? "col-span-1 row-span-1" : "col-span-2 row-span-2",
+            className:
+              j % 2 === 0 ? "col-span-1 row-span-1" : "col-span-2 row-span-2",
           }))}
         />
       ))}
@@ -59,9 +60,9 @@ export default function Page() {
 
 function SponsorsBlock({ title, sponsors }: SponsorsBlockProps) {
   return (
-    <section className="w-10/12 mx-auto py-6 relative z-10">
+    <section className="w-10/12 mx-auto py-2 md:py-6 relative z-10">
       <h2
-        className={`text-white text-4xl text-center font-bold ${cizel.className}`}
+        className={`text-white text-2xl md:text-4xl text-center font-bold ${cizel.className}`}
       >
         {title}
       </h2>
