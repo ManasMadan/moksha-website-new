@@ -14,6 +14,7 @@ export default {
         color1: "#F6CE87",
         color2: "#181818",
       },
+      
       fontFamily: {
         firlest: ["Firlest", "sans-serif"],
       },
