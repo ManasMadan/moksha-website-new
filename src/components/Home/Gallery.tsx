@@ -37,25 +37,23 @@ export default function Gallery() {
   }, []);
 
   const relativeScroll = Math.max(0, scrollY - sectionOffset);
-  
+
   const transitionRange = windowHeight * 0.7;
-  
+
   const eyeBlurAmount = Math.min(
     15,
     (relativeScroll / (transitionRange * 0.5)) * 15
   );
-  
+
   const eyeAndTextOpacity = Math.max(
     0,
-    1 - (relativeScroll / (transitionRange * 0.6))
+    1 - relativeScroll / (transitionRange * 0.6)
   );
 
   return (
     <div className="w-full" ref={galleryRef}>
       <div className="relative">
-        <div
-          className="flex flex-col items-center justify-center h-screen w-full overflow-hidden sticky top-0"
-        >
+        <div className="flex flex-col items-center justify-center h-screen w-full overflow-hidden sticky top-0">
           <div className="absolute inset-0 z-10">
             <div className="w-full h-full flex items-center justify-center">
               <div className="container max-w-5xl mx-auto">
@@ -74,7 +72,7 @@ export default function Gallery() {
                       className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
                     />
                   </div>
-                  
+
                   <div className="aspect-[4/3] overflow-hidden rounded-lg relative col-span-2">
                     <img
                       src="/assets/home/gallery/3.png"
@@ -89,7 +87,7 @@ export default function Gallery() {
                       className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
                     />
                   </div>
-                  
+
                   <div className="aspect-[3/4] overflow-hidden rounded-lg relative col-span-1">
                     <img
                       src="/assets/home/gallery/5.png"
@@ -111,7 +109,7 @@ export default function Gallery() {
                       className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
                     />
                   </div>
-                  
+
                   <div className="aspect-[16/9] overflow-hidden rounded-lg relative col-span-3">
                     <img
                       src="/assets/home/gallery/8.png"
@@ -127,7 +125,7 @@ export default function Gallery() {
           <div
             className="absolute inset-0 z-20"
             style={{
-              opacity: eyeAndTextOpacity,
+              opacity: eyeAndTextOpacity || 0,
               transition: "opacity 0.3s ease, filter 0.3s ease",
               filter: `blur(${eyeBlurAmount}px)`,
             }}
@@ -139,14 +137,14 @@ export default function Gallery() {
                 backgroundSize: "100% 100%",
               }}
             />
-            
+
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="w-[35rem] h-[35rem] border border-[#FFD58B] absolute"></div>
               <div className="w-[35rem] h-[35rem] border border-[#FFD58B] absolute rotate-45"></div>
             </div>
           </div>
-          
-          <h1 
+
+          <h1
             className="text-9xl font-bold text-[#FFD58B] relative z-30"
             style={{
               opacity: eyeAndTextOpacity,
@@ -158,7 +156,7 @@ export default function Gallery() {
           </h1>
         </div>
       </div>
-      
+
       <div style={{ height: "10vh" }}></div>
     </div>
   );

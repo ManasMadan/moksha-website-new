@@ -24,20 +24,20 @@ export default function Footer() {
             <ul className="flex flex-col gap-6 font-[655]">
               <li>
                 <Link
-                  href="/register"
+                  href="/auth/register"
                   className="text-2xl text-[#FFDC9E] hover:text-white transition-colors"
                 >
                   Register
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link
-                  href="/sponsors"
+                  href="/sponsor"
                   className="text-2xl text-[#FFDC9E] hover:text-white transition-colors"
                 >
                   Sponsors
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link
                   href="/events"
@@ -48,7 +48,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/contact"
+                  href="mailto:moksha@nsut.ac.in"
                   className="text-2xl text-[#FFDC9E] hover:text-white transition-colors"
                 >
                   Contact Us
@@ -56,12 +56,12 @@ export default function Footer() {
               </li>
             </ul>
           </nav>
-          <div className="md:text-right">
+          <div className="w-full md:w-fit md:text-right">
             <h2 className="text-4xl  text-[#FFDC9E] mb-5 font-[655]">
               Contact Us
             </h2>
             <div className="flex gap-4 mb-8 md:justify-end items-center">
-              <Link href="mailto:contact@moksha25.com">
+              <Link href="mailto:moksha@nsut.ac.in">
                 <Image
                   src="/assets/home/gmail.svg"
                   alt="Email"
@@ -71,7 +71,7 @@ export default function Footer() {
                 />
               </Link>
               <Link
-                href="https://instagram.com/moksha25"
+                href="https://instagram.com/mokshansut"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -84,7 +84,7 @@ export default function Footer() {
                 />
               </Link>
               <Link
-                href="https://facebook.com/moksha25"
+                href="https://facebook.com/mokshansut"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -97,7 +97,7 @@ export default function Footer() {
                 />
               </Link>
               <Link
-                href="https://twitter.com/moksha25"
+                href="https://x.com/mokshansut"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -113,7 +113,7 @@ export default function Footer() {
             <footer className="w-full py-4">
               <div className="container mx-auto px-4">
                 <div className="relative">
-                  <div className="h-0.5 bg-[#FFDC9E] w-full"></div>
+                  <div className="h-0.5 bg-[#FFDC9E]"></div>
                   <span className="absolute left-0 top-1/2 -translate-y-1/2 text-[#FFDC9E]">
                     ♦
                   </span>

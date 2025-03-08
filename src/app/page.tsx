@@ -12,6 +12,7 @@ import {
 import Navbar from "@/components/NavBar";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import Timeline from "./(pages)/timeline/page";
 
 const playfair = Playfair({ subsets: ["latin"] });
 
@@ -160,6 +161,7 @@ export default function Home() {
           <AfterMovie />
           <PastSponsor />
         </section>
+        <Timeline />
 
         <div className={`w-full ${playfair.className}`}>
           <FAQSection />

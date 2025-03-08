@@ -13,6 +13,53 @@ const koulen = Koulen({
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
+  
+  const [formData, setFormData] = useState({
+    email: "",
+    password: ""
+  });
+
+  const handleChange = (e: { target: { name: any; value: any; }; }) => {
+    const { name, value } = e.target;
+    
+    let newValue = value;
+    
+    if (name === "email") {
+      newValue = value.replace(/[^\w@.-]/g, '');
+    }
+    
+    setFormData(prev => ({
+      ...prev,
+      [name]: newValue
+    }));
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const { name } = e.target as HTMLInputElement;
+    
+    if (name === "email") {
+      if (
+        (e.key !== "Backspace" && 
+         e.key !== "Delete" && 
+         e.key !== "ArrowLeft" && 
+         e.key !== "ArrowRight" && 
+         e.key !== "Tab" && 
+         e.key !== "Enter" && 
+         e.key !== "@" && 
+         e.key !== "." && 
+         e.key !== "_" && 
+         e.key !== "-" && 
+         !/^[A-Za-z0-9]$/.test(e.key))
+      ) {
+        e.preventDefault();
+      }
+    }
+  };
+
+  const handleSubmit = (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
+    console.log("Login form submitted:", formData);
+  };
 
   return (
     <div className="min-h-screen w-full relative bg-black flex items-center justify-center">
@@ -32,13 +79,17 @@ export default function LoginPage() {
             LOG-IN
           </h1>
 
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="space-y-2">
               <label className="text-white uppercase text-sm font-semibold">
-                Moksha-ID
+                Email
               </label>
               <input
                 type="text"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                onKeyDown={handleKeyDown}
                 className="w-full px-4 py-3 bg-white rounded-lg focus:outline-none text-black font-semibold"
               />
             </div>
@@ -50,6 +101,9 @@ export default function LoginPage() {
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
                   className="w-full px-4 py-3 bg-white rounded-lg focus:outline-none text-black font-semibold"
                 />
                 <button

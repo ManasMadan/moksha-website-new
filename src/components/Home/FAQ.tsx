@@ -1,32 +1,57 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { ChevronDown } from "lucide-react";
 import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 
 const FAQSection = () => {
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
   const faqItems = [
     {
-      question: "What is Moksha'23?",
+      question: "What is Moksha'25?",
       answer:
-        "Moksha is the annual cultural festival of XYZ College. It features a variety of events including music, dance, art, literary competitions and more.",
+        "Moksha is the annual cultural festival of NSUT, a 3 - day long escape from reality into a whole different world of magic, mystery and innovation that takes place in the month of March. More than a fest, it has been a celebration of triumphs and an unforgettable experience of entertainment. After an electrifying comeback in 2024, we' re back bigger, bolder and more transformed than ever before.",
     },
     {
-      question: "Where will Moksha'23 take place?",
+      question: "Where will Moksha'25 take place?",
       answer:
-        "Moksha'23 will take place at our college campus located in Delhi. The festival will be spread across various venues including the main auditorium, sports complex, and open air theater.",
+        "Moksha'25 is a 3 day annual cultural extravaganza, organized in the month of March to be held at NSUT Main Campus, Dwarka.",
     },
     {
-      question: "What are the events in Moksha'23?",
+      question: "Who all can attend Moksha'25?",
       answer:
-        "Moksha'23 features a wide range of events including Battle of Bands, Dance competitions, Art exhibitions, Literary events, Theater performances, and various workshops.",
+        "The event is open to all college students. Participants must carry a valid ID for entry.",
+    },
+    {
+      question:
+        "What are the events in Moksha'25?",
+      answer:
+        "Every year, Moksha brings alive a world of magic and imagination ranging from captivating dramatics to dazzling dance performances, driven by the energetic hosts and enthusiastic participants.",
     },
     {
       question:
         "Is Moksha accepting outside Delhi-NCR teams to participate in their events?",
       answer:
-        "Yes, Moksha welcomes participants from all over the country. Teams from outside Delhi-NCR can register online through our website and participate in all open events.",
+        "Yes, Moksha is accepting participants in their amazing and innovative events from all across the country.",
+    },
+    {
+      question:
+        "How can I register for the fest?",
+      answer:
+        "You can register online through our official website or on-site during the event. Follow us on social media for updates about the registration links.",
+    },
+    {
+      question:
+        "How will I get the updates about events?",
+      answer:
+        "Each event details will be shared on our official website and official instagram handle @mokshansut. The itinerary for the events all throughout the fest will be released along with detailed rules and eligibility criteria for each event.",
+    },
+    {
+      question:
+        "Who should I contact for further queries?",
+      answer:
+        "For additional questions, email us at moksha@nsut.ac.in And follow us on our instagram handle for further updates @mokshansut.",
     },
   ];
 
@@ -41,18 +66,15 @@ const FAQSection = () => {
         src="/assets/home/faqRightDragon.png"
         alt="dragon"
         width={500}
-        height={0}
-        objectFit="contain"
+        height={500}
         className="absolute right-0 top-1/2 -translate-y-1/2 w-auto h-[80%] sm:h-full"
       />
       <Image
         src="/assets/home/faqLeftDragon.png"
         alt="dragon"
         width={500}
-        height={0}
-        objectFit="contain"
+        height={500}
         className="absolute left-0 top-1/2 -translate-y-1/2 w-auto h-[60%] sm:h-full z-30 mix-blend-lighten"
-        style={{ width: "auto", height: "100%" }}
       />
       <div className="absolute inset-0 bg-[#131313] opacity-70"></div>
       <Image
@@ -76,7 +98,7 @@ const FAQSection = () => {
               <div className="flex items-center justify-center w-full max-w-[80%] space-x-3">
                 <span className="text-2xl">{faq.question}</span>
                 <ChevronDown
-                  className={`h-4 w-4 flex-shrink-0 transition-transform duration-300 ${
+                  className={`h-4 w-4 flex-shrink-0 transition-transform duration-500 ease-in-out ${
                     openFaqIndex === index ? "transform rotate-180" : ""
                   }`}
                   color="#FFD58B"
@@ -84,25 +106,40 @@ const FAQSection = () => {
               </div>
             </button>
 
-            <div
-              className="overflow-hidden transition-all duration-300 ease-in-out"
-              style={{
-                maxHeight: openFaqIndex === index ? "200px" : "0",
-                opacity: openFaqIndex === index ? 1 : 0,
-              }}
-            >
+            <AnimatePresence>
               {openFaqIndex === index && (
-                <div
-                  className="pt-2 pb-4 px-4 mt-2 text-2xl bg-transparent backdrop-blur-md text-white bg-center bg-contain bg-no-repeat"
-                  style={{
-                    backgroundImage: "url('/assets/home/faqBtn.png')",
-                    backgroundSize: "100% 100%",
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ 
+                    height: "auto", 
+                    opacity: 1,
+                    transition: {
+                      height: { duration: 0.5, ease: [0.04, 0.62, 0.23, 0.98] },
+                      opacity: { duration: 0.3, delay: 0.1 }
+                    }
                   }}
+                  exit={{ 
+                    height: 0, 
+                    opacity: 0,
+                    transition: {
+                      height: { duration: 0.5, ease: [0.04, 0.62, 0.23, 0.98] },
+                      opacity: { duration: 0.3 }
+                    }
+                  }}
+                  className="overflow-hidden"
                 >
-                  {faq.answer}
-                </div>
+                  <div
+                    className="pt-2 pb-4 px-4 mt-2 text-2xl bg-transparent backdrop-blur-md text-white bg-center bg-contain bg-no-repeat"
+                    style={{
+                      backgroundImage: "url('/assets/home/faqBtn.png')",
+                      backgroundSize: "100% 100%",
+                    }}
+                  >
+                    {faq.answer}
+                  </div>
+                </motion.div>
               )}
-            </div>
+            </AnimatePresence>
           </div>
         ))}
       </div>

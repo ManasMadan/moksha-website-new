@@ -13,57 +13,64 @@ export default function PastSponsor() {
           backgroundSize: "100% 100%",
         }}
       >
-        {Array(5)
+        {Array(13)
           .fill(null)
           .map((_, rowIndex) => {
-            const opacity =
-              rowIndex === 0
-                ? 100
-                : rowIndex === 1
-                ? 60
-                : rowIndex === 2
-                ? 40
-                : rowIndex === 3
-                ? 20
-                : 10;
+            // Calculate opacity based on row position
+            // First few rows are more visible, later rows fade more
+            const opacity = Math.max(10, 100 - (rowIndex * 7));
 
             return Array(4)
               .fill(null)
-              .map((_, colIndex) => (
-                <div
-                  key={`${rowIndex}-${colIndex}`}
-                  className="relative aspect-video flex items-center justify-center"
-                  style={{
-                    marginBottom: "0.5rem",
-                  }}
-                >
-                  <div className="absolute inset-0 bg-transparent rounded-sm overflow-hidden">
+              .map((_, colIndex) => {
+                // Calculate the image number (1-52)
+                const imageNumber = rowIndex * 4 + colIndex + 1;
+                
+                // Only render if we haven't exceeded 52 images
+                if (imageNumber <= 52) {
+                  return (
                     <div
-                      className="absolute top-0 left-0 right-0 h-px bg-[#E1C38C]"
-                      style={{ opacity: opacity / 100 }}
-                    ></div>
+                      key={`${rowIndex}-${colIndex}`}
+                      className="relative aspect-video flex items-center justify-center"
+                      style={{
+                        marginBottom: "0.5rem",
+                      }}
+                    >
+                      <div className="absolute inset-0 bg-transparent rounded-sm overflow-hidden">
+                        <div
+                          className="absolute top-0 left-0 right-0 h-px bg-[#E1C38C]"
+                          style={{ opacity: opacity / 100 }}
+                        ></div>
 
-                    <div
-                      className="absolute top-0 right-0 bottom-0 w-px bg-[#E1C38C]"
-                      style={{ opacity: opacity / 100 }}
-                    ></div>
+                        <div
+                          className="absolute top-0 right-0 bottom-0 w-px bg-[#E1C38C]"
+                          style={{ opacity: opacity / 100 }}
+                        ></div>
 
-                    <div
-                      className="absolute bottom-0 left-0 right-0 h-px bg-[#E1C38C]"
-                      style={{ opacity: (opacity * 0.7) / 100 }}
-                    ></div>
+                        <div
+                          className="absolute bottom-0 left-0 right-0 h-px bg-[#E1C38C]"
+                          style={{ opacity: (opacity * 0.7) / 100 }}
+                        ></div>
 
-                    <div
-                      className="absolute top-0 left-0 bottom-0 w-px bg-[#E1C38C]"
-                      style={{ opacity: opacity / 100 }}
-                    ></div>
-                  </div>
+                        <div
+                          className="absolute top-0 left-0 bottom-0 w-px bg-[#E1C38C]"
+                          style={{ opacity: opacity / 100 }}
+                        ></div>
+                      </div>
 
-                  <div className="relative z-10 h-full w-full bg-white p-2">
-                    <Image src={`/assets/home/past-sponsors/${(rowIndex*4)+colIndex+1}.png`} fill alt="sponsor" className="object-contain"/>
-                  </div>
-                </div>
-              ));
+                      <div className="relative z-10 h-full w-full p-2 bg-white">
+                        <Image 
+                          src={`/assets/home/past-sponsors/${imageNumber}.png`} 
+                          fill 
+                          alt={`sponsor ${imageNumber}`} 
+                          className="object-contain p-2"
+                        />
+                      </div>
+                    </div>
+                  );
+                }
+                return null;
+              });
           })}
       </div>
     </div>
