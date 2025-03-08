@@ -242,7 +242,7 @@ function AnimatingLogo({ animatedLogoRef }: { animatedLogoRef: any }) {
                   "opacity 0.8s ease-in-out, transform 1s ease-in-out",
                 transform: birdsInPosition
                   ? "translate(0, 0)"
-                  : "translate(calc(50vw - 210px), 0)",
+                  : "translate(-100%, 0)", // Start from left edge of screen
                 transformOrigin: "center",
               }}
               x="-234"
@@ -261,7 +261,7 @@ function AnimatingLogo({ animatedLogoRef }: { animatedLogoRef: any }) {
                   "opacity 0.8s ease-in-out, transform 1s ease-in-out",
                 transform: birdsInPosition
                   ? "translate(0, 0)"
-                  : "translate(calc(-50vw + 210px), 0)",
+                  : "translate(100%, 0)", // Start from right edge of screen
                 transformOrigin: "center",
               }}
               x="898"
@@ -280,7 +280,7 @@ function AnimatingLogo({ animatedLogoRef }: { animatedLogoRef: any }) {
                   "opacity 0.8s ease-in-out, transform 1s ease-in-out",
                 transform: birdsInPosition
                   ? "translate(0, 0)"
-                  : "translate(0, 100px)",
+                  : "translate(0, 100%)", // Start from bottom of screen
                 transformOrigin: "center",
               }}
               x="447"
