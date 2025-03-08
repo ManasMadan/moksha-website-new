@@ -127,6 +127,11 @@ const TeamPage: React.FC = () => {
       position: "",
       imageUrl: "/assets/team/member/ANUSHKA.png",
     },
+    {
+      name:"PRANJUL MANGLA",
+      position:"",
+      imageUrl:"/assets/team/member/PRANJUL.png"
+    }
   ];
 
   return (
@@ -139,17 +144,11 @@ const TeamPage: React.FC = () => {
       }}
     >
       <div
-        className="absolute inset-0 z-0 bg-cover bg-no-repeat"
+        className="absolute inset-0 z-0 bg-contain bg-no-repeat"
         style={{
           backgroundImage: "url('/assets/team/bg.png')",
-          backgroundPositionX: "center"
-        }}
-      />
-      <div
-        className="absolute inset-0 z-0 bg-cover"
-        style={{
-          backgroundImage: "url('/assets/team/noise.png')",
           backgroundPositionX: "center",
+          backgroundSize: "100% auto",
         }}
       />
 
@@ -159,7 +158,7 @@ const TeamPage: React.FC = () => {
           <span className="pl-4 md:pl-8 lg:pl-16">TEAM</span>
         </h1>
 
-        <div className="mb-16">
+        <div className="mb-96">
           <h2 className="text-4xl md:text-5xl lg:text-7xl text-center font-bold mb-12 lg:mb-20 pb-6 lg:pb-14 text-[#FFD58B] border-b border-[#EEECEC]">
             CORE TEAM
           </h2>
@@ -174,26 +173,44 @@ const TeamPage: React.FC = () => {
             }}
           >
             {coreTeam.map((member, index) => (
-              <div key={index} className="flex flex-col items-center">
-                <div className="w-64 h-80 relative">
+              <React.Fragment key={"Frag" + index}>
+                {index === coreTeam.length - 3 ? (
                   <div
-                    className="absolute inset-0 bg-contain bg-no-repeat bg-center z-10"
-                    style={{ backgroundImage: "url('/assets/team/frame.svg')" }}
+                    key={"hidden 0" + index}
+                    className="hidden 2xl:block"
                   ></div>
+                ) : null}
+                {index === coreTeam.length - 1 ? (
+                  <div
+                    key={"hidden 1" + index}
+                    className="hidden lg:block 2xl:hidden"
+                  ></div>
+                ) : null}
+                <div key={index} className="flex flex-col items-center">
+                  <div className="w-64 h-80 relative">
+                    <div
+                      className="absolute inset-0 bg-contain bg-no-repeat bg-center z-10"
+                      style={{
+                        backgroundImage: "url('/assets/team/frame.svg')",
+                      }}
+                    ></div>
 
-                  <div className="absolute inset-2 overflow-hidden">
-                    <Image
-                      src={member.imageUrl || "/assets/team/member/kavish.png"}
-                      alt={member.name}
-                      fill
-                      className="object-cover object-center"
-                    />
+                    <div className="absolute inset-2 overflow-hidden">
+                      <Image
+                        src={
+                          member.imageUrl || "/assets/team/member/kavish.png"
+                        }
+                        alt={member.name}
+                        fill
+                        className="object-cover object-center"
+                      />
+                    </div>
                   </div>
+                  <p className="text-xl md:text-2xl lg:text-3xl font-semibold text-[#FFD58B] text-center uppercase mt-4">
+                    {member.name}
+                  </p>
                 </div>
-                <p className="text-xl md:text-2xl lg:text-3xl font-semibold text-[#FFD58B] text-center uppercase mt-4">
-                  {member.name}
-                </p>
-              </div>
+              </React.Fragment>
             ))}
           </div>
         </div>
@@ -204,7 +221,7 @@ const TeamPage: React.FC = () => {
           </h2>
 
           <div
-            className="grid"
+            className="grid "
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
@@ -213,26 +230,44 @@ const TeamPage: React.FC = () => {
             }}
           >
             {techTeam.map((member, index) => (
-              <div key={index} className="flex flex-col items-center">
-                <div className="w-64 h-80 relative">
+              <React.Fragment key={"Frag2" + index}>               
+                {index === techTeam.length - 1 ? (
                   <div
-                    className="absolute inset-0 bg-contain bg-no-repeat bg-center z-10"
-                    style={{ backgroundImage: "url('/assets/team/frame.svg')" }}
+                    key={"hidden 12" + index}
+                    className="hidden 2xl:block"
                   ></div>
+                ) : null}
+                {index === techTeam.length - 1 ? (
+                  <div
+                    key={"hidden 11" + index}
+                    className="hidden 2xl:block"
+                  ></div>
+                ) : null}
+                <div key={index} className="flex flex-col items-center">
+                  <div className="w-64 h-80 relative">
+                    <div
+                      className="absolute inset-0 bg-contain bg-no-repeat bg-center z-10"
+                      style={{
+                        backgroundImage: "url('/assets/team/frame.svg')",
+                      }}
+                    ></div>
 
-                  <div className="absolute inset-2 overflow-hidden">
-                    <Image
-                      src={member.imageUrl || "/assets/team/member/kavish.png"}
-                      alt={member.name}
-                      fill
-                      className="object-cover object-center"
-                    />
+                    <div className="absolute inset-2 overflow-hidden">
+                      <Image
+                        src={
+                          member.imageUrl || "/assets/team/member/kavish.png"
+                        }
+                        alt={member.name}
+                        fill
+                        className="object-cover object-center"
+                      />
+                    </div>
                   </div>
+                  <p className="text-xl md:text-2xl lg:text-3xl font-semibold text-white text-center uppercase mt-4">
+                    {member.name}
+                  </p>
                 </div>
-                <p className="text-xl md:text-2xl lg:text-3xl font-semibold text-white text-center uppercase mt-4">
-                  {member.name}
-                </p>
-              </div>
+              </React.Fragment>
             ))}
           </div>
         </div>

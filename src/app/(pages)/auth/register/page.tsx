@@ -43,7 +43,7 @@ export default function RegisterPage() {
               </label>
               <input
                 type="text"
-                className="w-full px-4 py-3 bg-white rounded-lg focus:outline-none text-color1 font-semibold"
+                className="w-full px-4 py-3 bg-white rounded-lg focus:outline-none text-black font-semibold"
               />
             </div>
 
@@ -53,7 +53,7 @@ export default function RegisterPage() {
               </label>
               <input
                 type="tel"
-                className="w-full px-4 py-3 bg-white rounded-lg focus:outline-none text-color1 font-semibold"
+                className="w-full px-4 py-3 bg-white rounded-lg focus:outline-none text-black font-semibold"
               />
             </div>
 
@@ -63,7 +63,7 @@ export default function RegisterPage() {
               </label>
               <input
                 type="email"
-                className="w-full px-4 py-3 bg-white rounded-lg focus:outline-none text-color1 font-semibold"
+                className="w-full px-4 py-3 bg-white rounded-lg focus:outline-none text-black font-semibold"
               />
             </div>
 
@@ -73,7 +73,7 @@ export default function RegisterPage() {
               </label>
               <input
                 type="text"
-                className="w-full px-4 py-3 bg-white rounded-lg focus:outline-none text-color1 font-semibold"
+                className="w-full px-4 py-3 bg-white rounded-lg focus:outline-none text-black font-semibold"
               />
             </div>
 
@@ -83,7 +83,7 @@ export default function RegisterPage() {
               </label>
               <input
                 type="date"
-                className="w-full px-4 py-3 bg-white rounded-lg focus:outline-none text-color1 font-semibold appearance-none"
+                className="w-full px-4 py-3 bg-white rounded-lg focus:outline-none text-black font-semibold appearance-none"
               />
             </div>
 
@@ -94,7 +94,7 @@ export default function RegisterPage() {
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
-                  className="w-full px-4 py-3 bg-white rounded-lg focus:outline-none text-color1 font-semibold"
+                  className="w-full px-4 py-3 bg-white rounded-lg focus:outline-none text-black font-semibold"
                 />
                 <button
                   type="button"
@@ -117,7 +117,7 @@ export default function RegisterPage() {
               <div className="relative">
                 <input
                   type={showConfirmPassword ? "text" : "password"}
-                  className="w-full px-4 py-3 bg-white rounded-lg focus:outline-none text-color1 font-semibold"
+                  className="w-full px-4 py-3 bg-white rounded-lg focus:outline-none text-black font-semibold"
                 />
                 <button
                   type="button"

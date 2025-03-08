@@ -39,7 +39,7 @@ export default function LoginPage() {
               </label>
               <input
                 type="text"
-                className="w-full px-4 py-3 bg-white rounded-lg focus:outline-none text-color1 font-semibold"
+                className="w-full px-4 py-3 bg-white rounded-lg focus:outline-none text-black font-semibold"
               />
             </div>
 
@@ -50,7 +50,7 @@ export default function LoginPage() {
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
-                  className="w-full px-4 py-3 bg-white rounded-lg focus:outline-none text-color1 font-semibold"
+                  className="w-full px-4 py-3 bg-white rounded-lg focus:outline-none text-black font-semibold"
                 />
                 <button
                   type="button"
