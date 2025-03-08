@@ -55,9 +55,10 @@ export default function Home() {
       animatedLogoRef.current.style.width = `${finalLogoBoundingBox.width}px`;
       animatedLogoRef.current.style.height = `${finalLogoBoundingBox.height}px`;
 
+      // Give the birds enough time to animate (1000ms for fade-in + 1000ms for movement)
       setTimeout(() => {
         setAnimationStage("moving");
-      }, 1000);
+      }, 2400);
     }
 
     if (animationStage === "moving") {
@@ -171,6 +172,23 @@ export default function Home() {
 }
 
 function AnimatingLogo({ animatedLogoRef }: { animatedLogoRef: any }) {
+  const [birdsVisible, setBirdsVisible] = useState(false);
+  const [birdsInPosition, setBirdsInPosition] = useState(false);
+
+  useEffect(() => {
+    // Show birds after a short delay
+    const showBirdsTimer = setTimeout(() => {
+      setBirdsVisible(true);
+
+      // Move birds to their final positions after they appear
+      setTimeout(() => {
+        setBirdsInPosition(true);
+      }, 800);
+    }, 400);
+
+    return () => clearTimeout(showBirdsTimer);
+  }, []);
+
   return (
     <div
       ref={animatedLogoRef}
@@ -216,6 +234,15 @@ function AnimatingLogo({ animatedLogoRef }: { animatedLogoRef: any }) {
             <image
               id="left_bird_img"
               xlinkHref="/assets/hero/left_bird.svg"
+              style={{
+                opacity: birdsVisible ? 1 : 0,
+                transition:
+                  "opacity 0.8s ease-in-out, transform 1s ease-in-out",
+                transform: birdsInPosition
+                  ? "translate(0, 0)"
+                  : "translate(calc(50vw - 210px), 0)",
+                transformOrigin: "center",
+              }}
               x="-234"
               y="147"
               width="677"
@@ -226,6 +253,15 @@ function AnimatingLogo({ animatedLogoRef }: { animatedLogoRef: any }) {
             <image
               id="right_bird_img"
               xlinkHref="/assets/hero/right_bird.svg"
+              style={{
+                opacity: birdsVisible ? 1 : 0,
+                transition:
+                  "opacity 0.8s ease-in-out, transform 1s ease-in-out",
+                transform: birdsInPosition
+                  ? "translate(0, 0)"
+                  : "translate(calc(-50vw + 210px), 0)",
+                transformOrigin: "center",
+              }}
               x="898"
               y="5"
               width="441"
@@ -236,6 +272,15 @@ function AnimatingLogo({ animatedLogoRef }: { animatedLogoRef: any }) {
             <image
               id="middle_bird_img"
               xlinkHref="/assets/hero/middle_bird.svg"
+              style={{
+                opacity: birdsVisible ? 1 : 0,
+                transition:
+                  "opacity 0.8s ease-in-out, transform 1s ease-in-out",
+                transform: birdsInPosition
+                  ? "translate(0, 0)"
+                  : "translate(0, 100px)",
+                transformOrigin: "center",
+              }}
               x="447"
               y="122"
               width="311.219"
