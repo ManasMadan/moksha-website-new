@@ -69,14 +69,14 @@ export default async function Page() {
                     endTime: string;
                     acceptingRegistrations: boolean;
                     venue: string;
-                    imageData: string;
+                    imageKey: string;
                     description: string;
                     __v: number;
                   }) => (
                     <EventCard
                       key={event._id.$oid}
                       eventName={event.name}
-                      eventImage={event.imageData}
+                      eventImage={event.imageKey}
                       eventStartTime={event.startTime}
                       eventEndTime={event.endTime}
                       eventVenue={event.venue}

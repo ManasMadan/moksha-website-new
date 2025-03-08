@@ -33,11 +33,12 @@ function EventCard({
               </h2>
             </div>
             <div className="relative w-full aspect-[5/4]">
-              <Image
-                src={eventImage || "/assets/events/card-img.png"}
+              <img
+                src={
+                  `/api/images/${eventImage}` || "/assets/events/card-img.png"
+                }
                 alt="event-image"
-                fill={true}
-                className="rounded-lg object-cover"
+                className="rounded-lg object-cover h-full w-full"
               />
             </div>
 
