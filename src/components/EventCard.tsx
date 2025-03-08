@@ -23,7 +23,7 @@ function EventCard({
   eventDay: number;
 }) {
   return (
-    <div className="flex justify-center items-center">
+    <div className={`flex justify-center items-center`}>
       <div className="bg-color1 w-full h-auto shadow-black shadow-md p-4 relative min-w-64 max-w-80 @container">
         <Frame>
           <div className="w-full h-full grid grid-rows-[80px_auto_auto_60px] gap-2 pb-6">

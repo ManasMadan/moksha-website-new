@@ -1,4 +1,6 @@
-import React, { HTMLAttributes } from "react";
+"use client";
+
+import React, { HTMLAttributes, useState, useEffect } from "react";
 import { Cinzel } from "next/font/google";
 import EventCard from "@/components/EventCard";
 import Image from "next/image";
@@ -8,8 +10,56 @@ const cizel = Cinzel({
   subsets: ["latin"],
 });
 
-export default async function Page() {
-  const { events, error } = await getEvents();
+// Define the categories
+const CATEGORIES = [
+  "ALL",
+  "DANCE",
+  "MUSIC",
+  "POETRY",
+  "QUIZ / TRIVIA / PUZZLES",
+  "VERBAL ARTS COMPETITION",
+  "DESIGN /ARTS/ CREATIVE BUILDING",
+  "ACTING/ PLAYS/ FILMS",
+  "FASHION/ TALENT SHOW",
+  "MINI FESTS",
+  "PHYSICAL GAMES",
+  "SIMULATION GAMES",
+  "SOCIAL EXPERIMENTS",
+];
+
+export default function Page() {
+  const [events, setEvents] = useState<any[]>([]);
+  const [error, setError] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("ALL");
+  const [loading, setLoading] = useState(true);
+
+  // Fetch events on component mount
+  useEffect(() => {
+    async function fetchEvents() {
+      try {
+        const { events: fetchedEvents, error: fetchError } = await getEvents();
+        if (fetchedEvents) {
+          setEvents(fetchedEvents);
+        }
+        if (fetchError) {
+          setError(fetchError);
+        }
+      } catch (err) {
+        setError("Failed to load events");
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchEvents();
+  }, []);
+
+  // Filter events based on selected category
+  const filteredEvents =
+    selectedCategory === "ALL"
+      ? events
+      : events.filter((event) => event.category === selectedCategory);
 
   return (
     <main className="min-h-screen bg-black w-full relative">
@@ -40,14 +90,26 @@ export default async function Page() {
           <h1 className="text-center text-white font-firlest text-7xl sm:text-9xl md:text-[145px]">
             Events
           </h1>
-          <div className="w-11/12 max-w-4xl mx-auto my-8 md:my-10 lg:my-12 flex justify-center items-center content-center flex-wrap gap-4 md:gap-8">
-            {Array.from({ length: 8 }).map((_, i) => (
-              <CustomButton key={i}>Category {i + 1}</CustomButton>
+          <div className="w-11/12 max-w-5xl mx-auto my-8 md:my-10 lg:my-12 flex justify-center items-center content-center flex-wrap gap-4 md:gap-6">
+            {CATEGORIES.map((category, i) => (
+              <CustomButton
+                key={i}
+                className={
+                  selectedCategory === category ? "bg-color1/50 text-white" : ""
+                }
+                onClick={() => setSelectedCategory(category)}
+              >
+                {category}
+              </CustomButton>
             ))}
           </div>
         </section>
         <section className="w-10/12 mx-auto py-6 pb-16 md:pb-20">
-          {error ? (
+          {loading ? (
+            <div className="text-white text-center col-span-full py-8">
+              Loading events...
+            </div>
+          ) : error ? (
             <div className="text-red-500 text-center p-4 bg-black/30 rounded">
               Error loading events: {error}
             </div>
@@ -58,23 +120,11 @@ export default async function Page() {
                 gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
               }}
             >
-              {events && events.length > 0 ? (
-                events.map(
-                  (event: {
-                    _id: { $oid: string };
-                    name: string;
-                    owner: { $oid: string };
-                    day: number;
-                    startTime: string;
-                    endTime: string;
-                    acceptingRegistrations: boolean;
-                    venue: string;
-                    imageKey: string;
-                    description: string;
-                    __v: number;
-                  }) => (
+              {filteredEvents && filteredEvents.length > 0 ? (
+                filteredEvents.map(function (event, i) {
+                  return (
                     <EventCard
-                      key={event._id.$oid}
+                      key={i}
                       eventName={event.name}
                       eventImage={event.imageKey}
                       eventStartTime={event.startTime}
@@ -82,11 +132,11 @@ export default async function Page() {
                       eventVenue={event.venue}
                       eventDay={event.day}
                     />
-                  )
-                )
+                  );
+                })
               ) : (
                 <div className="text-white text-center col-span-full py-8">
-                  No events found
+                  No events found for this category
                 </div>
               )}
             </div>
@@ -101,7 +151,7 @@ function CustomButton(props: HTMLAttributes<HTMLButtonElement>) {
   return (
     <button
       {...props}
-      className={`border-2 border-color1 px-4 md:px-6 py-1 text-color text-color1 font-cizel font-semibold rounded-full text-xs sm:text-sm md:text-base lg:text-xl ${cizel.className} ${props.className}`}
+      className={`border-2 border-color1 px-3 md:px-4 py-1 text-color1 font-cizel font-semibold rounded-full text-xs sm:text-sm md:text-base whitespace-nowrap hover:bg-color1/20 transition-colors duration-300 ${cizel.className} ${props.className}`}
     >
       {props.children}
     </button>

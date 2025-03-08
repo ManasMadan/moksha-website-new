@@ -15,6 +15,87 @@ export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  const [formData, setFormData] = useState({
+    fullName: "",
+    mobile: "",
+    email: "",
+    collegeName: "",
+    dob: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const handleChange = (e: { target: { name: any; value: any; }; }) => {
+    const { name, value } = e.target;
+
+    let newValue = value;
+
+    if (name === "fullName" || name === "collegeName") {
+      newValue = value.replace(/[^A-Za-z\s]/g, "");
+    } else if (name === "mobile") {
+      newValue = value.replace(/\D/g, "").slice(0, 10);
+    } else if (name === "email") {
+      newValue = value.replace(/[^\w@.-]/g, "");
+    }
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: newValue,
+    }));
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const { name } = e.target as HTMLInputElement;
+
+    if (name === "mobile") {
+      if (
+        e.key !== "Backspace" &&
+        e.key !== "Delete" &&
+        e.key !== "ArrowLeft" &&
+        e.key !== "ArrowRight" &&
+        e.key !== "Tab" &&
+        e.key !== "Enter" &&
+        !/^\d$/.test(e.key)
+      ) {
+        e.preventDefault();
+      }
+    } else if (name === "fullName" || name === "collegeName") { 
+      if (
+        e.key !== "Backspace" &&
+        e.key !== "Delete" &&
+        e.key !== "ArrowLeft" &&
+        e.key !== "ArrowRight" &&
+        e.key !== "Tab" &&
+        e.key !== "Enter" &&
+        e.key !== " " &&
+        !/^[A-Za-z]$/.test(e.key)
+      ) {
+        e.preventDefault();
+      }
+    } else if (name === "email") {
+      if (
+        e.key !== "Backspace" &&
+        e.key !== "Delete" &&
+        e.key !== "ArrowLeft" &&
+        e.key !== "ArrowRight" &&
+        e.key !== "Tab" &&
+        e.key !== "Enter" &&
+        e.key !== "@" &&
+        e.key !== "." &&
+        e.key !== "_" &&
+        e.key !== "-" &&
+        !/^[A-Za-z0-9]$/.test(e.key)
+      ) {
+        e.preventDefault();
+      }
+    }
+  };
+
+  const handleSubmit = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    console.log("Form submitted:", formData);
+  };
+
   return (
     <div className="min-h-screen w-full relative bg-black flex items-center justify-center pt-12">
       <div className="absolute inset-0 z-0">
@@ -36,13 +117,17 @@ export default function RegisterPage() {
             PLEASE FILL the FORM TO CREATE AN ACCOUNT
           </p>
 
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="space-y-2">
               <label className="text-white uppercase text-sm font-semibold">
                 Full Name*
               </label>
               <input
                 type="text"
+                name="fullName"
+                value={formData.fullName}
+                onChange={handleChange}
+                onKeyDown={handleKeyDown}
                 className="w-full px-4 py-3 bg-white rounded-lg focus:outline-none text-black font-semibold"
               />
             </div>
@@ -53,7 +138,12 @@ export default function RegisterPage() {
               </label>
               <input
                 type="tel"
+                name="mobile"
+                value={formData.mobile}
+                onChange={handleChange}
+                onKeyDown={handleKeyDown}
                 className="w-full px-4 py-3 bg-white rounded-lg focus:outline-none text-black font-semibold"
+                maxLength={10}
               />
             </div>
 
@@ -63,6 +153,10 @@ export default function RegisterPage() {
               </label>
               <input
                 type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                onKeyDown={handleKeyDown}
                 className="w-full px-4 py-3 bg-white rounded-lg focus:outline-none text-black font-semibold"
               />
             </div>
@@ -73,6 +167,10 @@ export default function RegisterPage() {
               </label>
               <input
                 type="text"
+                name="collegeName"
+                value={formData.collegeName}
+                onChange={handleChange}
+                onKeyDown={handleKeyDown}
                 className="w-full px-4 py-3 bg-white rounded-lg focus:outline-none text-black font-semibold"
               />
             </div>
@@ -83,6 +181,9 @@ export default function RegisterPage() {
               </label>
               <input
                 type="date"
+                name="dob"
+                value={formData.dob}
+                onChange={handleChange}
                 className="w-full px-4 py-3 bg-white rounded-lg focus:outline-none text-black font-semibold appearance-none"
               />
             </div>
@@ -94,6 +195,9 @@ export default function RegisterPage() {
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
                   className="w-full px-4 py-3 bg-white rounded-lg focus:outline-none text-black font-semibold"
                 />
                 <button
@@ -117,6 +221,9 @@ export default function RegisterPage() {
               <div className="relative">
                 <input
                   type={showConfirmPassword ? "text" : "password"}
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
                   className="w-full px-4 py-3 bg-white rounded-lg focus:outline-none text-black font-semibold"
                 />
                 <button

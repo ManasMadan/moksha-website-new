@@ -10,6 +10,7 @@ import {
   Hero,
   PastSponsor,
 } from "@/components/Home";
+import Timeline from "./timeline/page";
 
 const playfair = Playfair({ subsets: ["latin"] });
 
@@ -42,7 +43,7 @@ export default function Home() {
 
         <PastSponsor />
       </section>
-
+      <Timeline/>
       <div className={`w-full ${playfair.className}`}>
         <FAQSection />
       </div>

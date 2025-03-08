@@ -80,7 +80,7 @@ const TeamPage: React.FC = () => {
     {
       name: "KAVISH DHAM",
       position: "",
-      imageUrl: "/assets/team/member/KAVISH.png",
+      imageUrl: "/assets/team/member/KAVISH.jpeg",
     },
     {
       name: "MANAS MADAN",
@@ -128,10 +128,10 @@ const TeamPage: React.FC = () => {
       imageUrl: "/assets/team/member/ANUSHKA.png",
     },
     {
-      name:"PRANJUL MANGLA",
-      position:"",
-      imageUrl:"/assets/team/member/PRANJUL.png"
-    }
+      name: "PRANJUL MANGLA",
+      position: "",
+      imageUrl: "/assets/team/member/PRANJUL.png",
+    },
   ];
 
   return (
@@ -144,11 +144,11 @@ const TeamPage: React.FC = () => {
       }}
     >
       <div
-        className="absolute inset-0 z-0 bg-contain bg-no-repeat"
+        className="absolute inset-0 z-0 bg-contain bg-no-repeat bg-blend-screen"
         style={{
-          backgroundImage: "url('/assets/team/bg.png')",
-          backgroundPositionX: "center",
-          backgroundSize: "100% auto",
+          backgroundImage: "url('/assets/team/bg.jpeg')",
+          backgroundPositionX: "center",        
+          opacity: "0.8",
         }}
       />
 
@@ -174,18 +174,6 @@ const TeamPage: React.FC = () => {
           >
             {coreTeam.map((member, index) => (
               <React.Fragment key={"Frag" + index}>
-                {index === coreTeam.length - 3 ? (
-                  <div
-                    key={"hidden 0" + index}
-                    className="hidden 2xl:block"
-                  ></div>
-                ) : null}
-                {index === coreTeam.length - 1 ? (
-                  <div
-                    key={"hidden 1" + index}
-                    className="hidden lg:block 2xl:hidden"
-                  ></div>
-                ) : null}
                 <div key={index} className="flex flex-col items-center">
                   <div className="w-64 h-80 relative">
                     <div
@@ -230,25 +218,13 @@ const TeamPage: React.FC = () => {
             }}
           >
             {techTeam.map((member, index) => (
-              <React.Fragment key={"Frag2" + index}>               
-                {index === techTeam.length - 1 ? (
-                  <div
-                    key={"hidden 12" + index}
-                    className="hidden 2xl:block"
-                  ></div>
-                ) : null}
-                {index === techTeam.length - 1 ? (
-                  <div
-                    key={"hidden 11" + index}
-                    className="hidden 2xl:block"
-                  ></div>
-                ) : null}
+              <React.Fragment key={"Frag2" + index}>
                 <div key={index} className="flex flex-col items-center">
                   <div className="w-64 h-80 relative">
                     <div
                       className="absolute inset-0 bg-contain bg-no-repeat bg-center z-10"
                       style={{
-                        backgroundImage: "url('/assets/team/frame.svg')",
+                        backgroundImage: "url('/assets/team/silverFrame.svg')",
                       }}
                     ></div>
 

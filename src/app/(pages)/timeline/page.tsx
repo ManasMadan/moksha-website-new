@@ -2,25 +2,21 @@ import React from "react";
 import Image from "next/image";
 
 const data = {
-  2022: [
-    "/assets/timeline/temp.jpeg",
-    "/assets/timeline/temp.jpeg",
-    "/assets/timeline/temp.jpeg",
-  ],
   2023: [
-    "/assets/timeline/temp.jpeg",
-    "/assets/timeline/temp.jpeg",
-    "/assets/timeline/temp.jpeg",
+    "/assets/timeline/23_1.jpg",
+    "/assets/timeline/23_2.jpg",
+    "/assets/timeline/23_3.jpg",
+    "/assets/timeline/23_4.jpg",
+    "/assets/timeline/23_5.jpg",
+    "/assets/timeline/23_6.jpg",
+    "/assets/timeline/23_7.jpg",
   ],
   2024: [
-    "/assets/timeline/temp.jpeg",
-    "/assets/timeline/temp.jpeg",
-    "/assets/timeline/temp.jpeg",
-  ],
-  2025: [
-    "/assets/timeline/temp.jpeg",
-    "/assets/timeline/temp.jpeg",
-    "/assets/timeline/temp.jpeg",
+    "/assets/timeline/24_1.jpg",
+    "/assets/timeline/24_2.jpg",
+    "/assets/timeline/24_3.jpg",
+    "/assets/timeline/24_4.jpg",
+    "/assets/timeline/24_5.jpg",
   ],
 };
 
@@ -30,7 +26,7 @@ const Timeline = () => {
     totalItems += images.length;
   });
 
-  const totalHeight = 13 + totalItems * 10;
+  const totalHeight = 20 + totalItems * 10;
 
   return (
     <div className="min-h-screen bg-[#131313] px-8 pt-24 pb-44 relative">
@@ -38,7 +34,7 @@ const Timeline = () => {
       <div className="fixed right-5 top-0 w-[0.5px] h-full bg-[#FFFFFF] invisible md:visible" />
       <div className="fixed right-8 top-0 w-[0.5px] h-full bg-[#FFFFFF] invisible md:visible" />
 
-      <div className="absolute inset-0 z-0">
+    {/*   <div className="absolute inset-0 z-0">
         <Image
           src="/assets/timeline/bg1.png"
           alt="Background"
@@ -46,7 +42,7 @@ const Timeline = () => {
           className="object-cover object-center"
           priority
         />
-      </div>
+      </div> */}
       <div className="absolute inset-0 z-10">
         <Image
           src="/assets/timeline/bg2.png"
@@ -79,40 +75,27 @@ const Timeline = () => {
           {Object.entries(data).map(([year, images], yearIndex) => (
             <React.Fragment key={year}>
               <div
-                className={`absolute ${
-                  yearIndex % 2 === 0 ? "left-1/2 pl-1" : "right-1/2 pr-1"
-                } flex items-center`}
+                className={`absolute ${"left-1/2 pl-1"} flex items-center`}
                 style={{
-                  top: `calc(60px + ${yearIndex * 30}rem)`,
+                  top: `calc(60px + ${yearIndex * 74}rem)`,
                 }}
               >
-                {yearIndex % 2 === 0 ? (
-                  <>
-                    <div
-                      className="bg-[#FFD58B] h-[2px] md:h-[3px] lg:h-1"
-                      style={{ width: "calc(20vw)" }}
-                    ></div>
-                    <h1 className="text-[#FFD58B] text-2xl sm:text-3xl md:text-4xl lg:text-5xl px-4 font-[540]">
-                      {year}
-                    </h1>
-                  </>
-                ) : (
-                  <>
-                    <h1 className="text-[#FFD58B] text-2xl sm:text-3xl md:text-4xl lg:text-5xl px-4 font-[540]">
-                      {year}
-                    </h1>
-                    <div
-                      className="bg-[#FFD58B] h-[2px] md:h-[3px] lg:h-1"
-                      style={{ width: "calc(20vw)" }}
-                    ></div>
-                  </>
-                )}
+                <>
+                  <div
+                    className="bg-[#FFD58B] h-[2px] md:h-[3px] lg:h-1"
+                    style={{ width: "calc(20vw)" }}
+                  ></div>
+                  <h1 className="text-[#FFD58B] text-2xl sm:text-3xl md:text-4xl lg:text-5xl px-4 font-[540]">
+                    {year}
+                  </h1>
+                </>
               </div>
 
               {images.map((image, itemIndex) => {
-                const totalItemIndex = Object.values(data)
-                  .slice(0, yearIndex)
-                  .reduce((acc, curr) => acc + curr.length, itemIndex);
+                const totalItemIndex = Object.values(data).reduce(
+                  (acc, curr) => acc + curr.length,
+                  itemIndex
+                );
 
                 return (
                   <div
@@ -120,7 +103,7 @@ const Timeline = () => {
                     className="relative"
                     style={{
                       top: `calc(100px + ${
-                        yearIndex * 30 + itemIndex * 10
+                        yearIndex * 75 + itemIndex * 10
                       }rem)`,
                     }}
                   >

@@ -12,7 +12,7 @@ const Navbar = () => {
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/events", label: "Events" },
-    { href: "/sponsor", label: "Sponsor" },
+    /* { href: "/sponsor", label: "Sponsor" }, */
     { href: "/team", label: "Team" },
   ];
 
