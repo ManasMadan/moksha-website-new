@@ -21,7 +21,7 @@ export default function Footer() {
 
         <div className="flex-1 flex flex-col md:flex-row justify-between items-end">
           <nav className="mb-10 md:mb-0">
-            <ul className="flex flex-col gap-6 font-[655]">
+            <ul className="flex flex-col gap-6 font-[655] text-end">
               <li>
                 <Link
                   href="/auth/register"
@@ -56,11 +56,11 @@ export default function Footer() {
               </li>
             </ul>
           </nav>
-          <div className="w-full md:w-fit md:text-right">
+          <div className="w-full md:w-fit text-right">
             <h2 className="text-4xl  text-[#FFDC9E] mb-5 font-[655]">
               Contact Us
             </h2>
-            <div className="flex gap-4 mb-8 md:justify-end items-center">
+            <div className="flex gap-4 mb-8 justify-end items-center">
               <Link href="mailto:moksha@nsut.ac.in">
                 <Image
                   src="/assets/home/gmail.svg"

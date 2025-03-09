@@ -4,25 +4,6 @@ import { revalidatePath } from "next/cache";
 import clientPromise from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
 
-type Event = {
-  _id?: string | ObjectId;
-  name: string;
-  owner: { $oid: string };
-  day: number;
-  startTime: string;
-  endTime: string;
-  acceptingRegistrations: boolean;
-  venue: string;
-  imageKey: string;
-  description: string;
-  isTeamEvent: boolean;
-  minNumberOfTeamMembers?: number;
-  maxNumberOfTeamMembers?: number;
-  customInputs: any[];
-  createdAt?: Date;
-  updatedAt?: Date;
-};
-
 export async function getEvents() {
   try {
     const client = await clientPromise;

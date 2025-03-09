@@ -8,11 +8,11 @@ import {
   Footer,
   Gallery,
   PastSponsor,
+  Timeline
 } from "@/components/Home";
 import Navbar from "@/components/NavBar";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import Timeline from "./(pages)/timeline/page";
 
 const playfair = Playfair({ subsets: ["latin"] });
 

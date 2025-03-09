@@ -2,17 +2,26 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
+import { useState, useEffect, Suspense } from "react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { Koulen } from "next/font/google";
+import { useRouter, useSearchParams } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 const koulen = Koulen({
   weight: "400",
   subsets: ["latin"],
 });
 
-export default function LoginPage() {
+function LoginPageContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const error = searchParams.get("error");
+  
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(error || "");
+  const [success, setSuccess] = useState("");
   
   const [formData, setFormData] = useState({
     email: "",
@@ -56,10 +65,56 @@ export default function LoginPage() {
     }
   };
 
-  const handleSubmit = (e: { preventDefault: () => void; }) => {
-    e.preventDefault();
-    console.log("Login form submitted:", formData);
+  const handleGoogleSignIn = async () => {
+    try {
+      setIsLoading(true);
+      await signIn("google", { callbackUrl: "/my-profile" });
+    } catch (error) {
+      console.error("Google sign-in error:", error);
+      setErrorMessage("Failed to sign in with Google");
+    } finally {
+      setIsLoading(false);
+    }
   };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorMessage("");
+    setSuccess("");
+    
+    if (!formData.email || !formData.password) {
+      setErrorMessage("Email and password are required");
+      return;
+    }
+    
+    setIsLoading(true);
+    
+    try {
+      const result = await signIn("credentials", {
+        email: formData.email,
+        password: formData.password,
+        redirect: false,
+      });
+      
+      if (result?.error) {
+        setErrorMessage("Invalid email or password");
+      } else {
+        setSuccess("Login successful");
+        router.push("/my-profile");
+      }
+    } catch (error) {
+      setErrorMessage("Login failed");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (errorMessage) {
+      const timer = setTimeout(() => setErrorMessage(""), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [errorMessage]);
 
   return (
     <div className="min-h-screen w-full relative bg-black flex items-center justify-center">
@@ -79,6 +134,18 @@ export default function LoginPage() {
             LOG-IN
           </h1>
 
+          {errorMessage && (
+            <div className="mb-4 p-3 bg-red-500/20 border border-red-500 rounded-lg text-white text-center">
+              {errorMessage}
+            </div>
+          )}
+
+          {success && (
+            <div className="mb-4 p-3 bg-green-500/20 border border-green-500 rounded-lg text-white text-center">
+              {success}
+            </div>
+          )}
+
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="space-y-2">
               <label className="text-white uppercase text-sm font-semibold">
@@ -91,6 +158,7 @@ export default function LoginPage() {
                 onChange={handleChange}
                 onKeyDown={handleKeyDown}
                 className="w-full px-4 py-3 bg-white rounded-lg focus:outline-none text-black font-semibold"
+                required
               />
             </div>
 
@@ -105,6 +173,7 @@ export default function LoginPage() {
                   value={formData.password}
                   onChange={handleChange}
                   className="w-full px-4 py-3 bg-white rounded-lg focus:outline-none text-black font-semibold"
+                  required
                 />
                 <button
                   type="button"
@@ -120,7 +189,7 @@ export default function LoginPage() {
               </div>
               <div className="text-right">
                 <Link
-                  href="/forgot-password"
+                  href="/auth/forgot-password"
                   className="text-white underline text-sm font-semibold"
                 >
                   FORGOT PASSWORD?
@@ -130,11 +199,17 @@ export default function LoginPage() {
 
             <button
               type="submit"
-              className="w-full bg-color1 text-white py-3 rounded-lg font-bold hover:bg-color1/80 transition-colors text-2xl"
+              disabled={isLoading}
+              className="w-full bg-color1 text-white py-3 rounded-lg font-bold hover:bg-color1/80 transition-colors text-2xl disabled:opacity-70"
             >
-              <span className="drop-shadow-[0_2px_4px_rgba(0,0,0,0.4)] filter">
-                SIGN IN
-              </span>
+              {isLoading ? (
+                <span className="flex items-center justify-center">
+                  <Loader2 className="animate-spin mr-2" size={20} />
+                  SIGNING IN...
+                </span>
+              ) : (
+                "SIGN IN"
+              )}
             </button>
 
             <div className="flex items-center gap-4">
@@ -145,29 +220,33 @@ export default function LoginPage() {
 
             <button
               type="button"
-              className={`w-full bg-white text-black py-3 rounded-lg font-semibold flex items-center justify-center gap-2 ${koulen.className}`}
+              onClick={handleGoogleSignIn}
+              disabled={isLoading}
+              className={`w-full bg-white text-black py-3 rounded-lg font-semibold flex items-center justify-center gap-2 ${koulen.className} disabled:opacity-70`}
             >
-              <Image
-                src="/assets/icons/google-icon.svg"
-                alt="Google"
-                width={20}
-                height={20}
-              />
+              {isLoading ? (
+                <Loader2 className="animate-spin" size={20} />
+              ) : (
+                <Image
+                  src="/assets/icons/google-icon.svg"
+                  alt="Google"
+                  width={20}
+                  height={20}
+                />
+              )}
               CONTINUE WITH GOOGLE
             </button>
-
-            <p className="text-center text-white font-bold">
-              CREATE A NEW ACCOUNT{" "}
-              <Link
-                href="/auth/register"
-                className="text-color1 underline underline-offset-[5px] font-[740]"
-              >
-                SIGN UP
-              </Link>
-            </p>
           </form>
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="text-white text-center">Loading...</div>}>
+      <LoginPageContent />
+    </Suspense>
   );
 }

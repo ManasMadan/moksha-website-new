@@ -7,26 +7,17 @@ export default function PastSponsor() {
         past sponsors
       </h1>
       <div
-        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 md:gap-4 w-full max-w-6xl bg-contain bg-center bg-no-repeat px-4 sm:px-8 md:px-16 lg:px-20 py-4 relative"
-        style={{
-          backgroundImage: "url('/assets/home/afterMovieFrame.png')",
-          backgroundSize: "100% 100%",
-        }}
+        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 md:gap-4 w-full max-w-6xl px-4 sm:px-8 md:px-16 lg:px-20 py-4 relative"
       >
         {Array(13)
           .fill(null)
           .map((_, rowIndex) => {
-            // Calculate opacity based on row position
-            // First few rows are more visible, later rows fade more
             const opacity = Math.max(10, 100 - (rowIndex * 7));
 
             return Array(4)
               .fill(null)
-              .map((_, colIndex) => {
-                // Calculate the image number (1-52)
+              .map((_, colIndex) => {               
                 const imageNumber = rowIndex * 4 + colIndex + 1;
-                
-                // Only render if we haven't exceeded 52 images
                 if (imageNumber <= 52) {
                   return (
                     <div

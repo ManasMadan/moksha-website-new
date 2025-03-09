@@ -2,9 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { Koulen } from "next/font/google";
+import { registerUser } from "@/app/server/auth";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const koulen = Koulen({
   weight: "400",
@@ -12,8 +15,12 @@ const koulen = Koulen({
 });
 
 export default function RegisterPage() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -25,7 +32,7 @@ export default function RegisterPage() {
     confirmPassword: "",
   });
 
-  const handleChange = (e: { target: { name: any; value: any; }; }) => {
+  const handleChange = (e: { target: { name: any; value: any } }) => {
     const { name, value } = e.target;
 
     let newValue = value;
@@ -59,7 +66,7 @@ export default function RegisterPage() {
       ) {
         e.preventDefault();
       }
-    } else if (name === "fullName" || name === "collegeName") { 
+    } else if (name === "fullName" || name === "collegeName") {
       if (
         e.key !== "Backspace" &&
         e.key !== "Delete" &&
@@ -91,10 +98,59 @@ export default function RegisterPage() {
     }
   };
 
-  const handleSubmit = (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    console.log("Form submitted:", formData);
+  const handleGoogleSignIn = async () => {
+    try {
+      setIsLoading(true);
+      await signIn("google");
+    } catch (error) {
+      console.error("Google sign-in error:", error);
+      setError("Failed to sign in with Google");
+    } finally {
+      setIsLoading(false);
+    }
   };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    setSuccess("");
+
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const formDataObj = new FormData();
+      Object.entries(formData).forEach(([key, value]) => {
+        formDataObj.append(key, value);
+      });
+
+      const result = await registerUser(formDataObj);
+
+      if (result.error) {
+        setError(result.error);
+      } else if (result.success) {
+        setSuccess(result.success);
+        setTimeout(() => {
+          router.push("/auth/login");
+        }, 2000);
+      }
+    } catch (error: any) {
+      setError(error.message || "Registration failed");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (error) {
+      const timer = setTimeout(() => setError(""), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [error]);
 
   return (
     <div className="min-h-screen w-full relative bg-black flex items-center justify-center pt-12">
@@ -117,6 +173,18 @@ export default function RegisterPage() {
             PLEASE FILL the FORM TO CREATE AN ACCOUNT
           </p>
 
+          {error && (
+            <div className="mb-4 p-3 bg-red-500/20 border border-red-500 rounded-lg text-white text-center">
+              {error}
+            </div>
+          )}
+
+          {success && (
+            <div className="mb-4 p-3 bg-green-500/20 border border-green-500 rounded-lg text-white text-center">
+              {success}
+            </div>
+          )}
+
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="space-y-2">
               <label className="text-white uppercase text-sm font-semibold">
@@ -129,6 +197,7 @@ export default function RegisterPage() {
                 onChange={handleChange}
                 onKeyDown={handleKeyDown}
                 className="w-full px-4 py-3 bg-white rounded-lg focus:outline-none text-black font-semibold"
+                required
               />
             </div>
 
@@ -144,6 +213,7 @@ export default function RegisterPage() {
                 onKeyDown={handleKeyDown}
                 className="w-full px-4 py-3 bg-white rounded-lg focus:outline-none text-black font-semibold"
                 maxLength={10}
+                required
               />
             </div>
 
@@ -158,6 +228,7 @@ export default function RegisterPage() {
                 onChange={handleChange}
                 onKeyDown={handleKeyDown}
                 className="w-full px-4 py-3 bg-white rounded-lg focus:outline-none text-black font-semibold"
+                required
               />
             </div>
 
@@ -172,6 +243,7 @@ export default function RegisterPage() {
                 onChange={handleChange}
                 onKeyDown={handleKeyDown}
                 className="w-full px-4 py-3 bg-white rounded-lg focus:outline-none text-black font-semibold"
+                required
               />
             </div>
 
@@ -185,6 +257,7 @@ export default function RegisterPage() {
                 value={formData.dob}
                 onChange={handleChange}
                 className="w-full px-4 py-3 bg-white rounded-lg focus:outline-none text-black font-semibold appearance-none"
+                required
               />
             </div>
 
@@ -199,6 +272,8 @@ export default function RegisterPage() {
                   value={formData.password}
                   onChange={handleChange}
                   className="w-full px-4 py-3 bg-white rounded-lg focus:outline-none text-black font-semibold"
+                  required
+                  minLength={8}
                 />
                 <button
                   type="button"
@@ -225,6 +300,7 @@ export default function RegisterPage() {
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   className="w-full px-4 py-3 bg-white rounded-lg focus:outline-none text-black font-semibold"
+                  required
                 />
                 <button
                   type="button"
@@ -242,11 +318,19 @@ export default function RegisterPage() {
 
             <button
               type="submit"
-              className="w-full bg-color1 text-white py-3 rounded-lg font-bold hover:bg-color1/80 transition-colors text-2xl"
+              disabled={isLoading}
+              className="w-full bg-color1 text-white py-3 rounded-lg font-bold hover:bg-color1/80 transition-colors text-2xl disabled:opacity-70"
             >
-              <span className="drop-shadow-[0_2px_4px_rgba(0,0,0,0.4)] filter">
-                SIGN UP
-              </span>
+              {isLoading ? (
+                <span className="flex items-center justify-center">
+                  <Loader2 className="animate-spin mr-2" size={20} />
+                  SIGNING UP...
+                </span>
+              ) : (
+                <span className="drop-shadow-[0_2px_4px_rgba(0,0,0,0.4)] filter">
+                  SIGN UP
+                </span>
+              )}
             </button>
 
             <div className="flex items-center gap-4">
@@ -257,14 +341,20 @@ export default function RegisterPage() {
 
             <button
               type="button"
-              className={`w-full bg-white text-black py-3 rounded-lg font-semibold flex items-center justify-center gap-2 ${koulen.className}`}
+              onClick={handleGoogleSignIn}
+              disabled={isLoading}
+              className={`w-full bg-white text-black py-3 rounded-lg font-semibold flex items-center justify-center gap-2 ${koulen.className} disabled:opacity-70`}
             >
-              <Image
-                src="/assets/icons/google-icon.svg"
-                alt="Google"
-                width={20}
-                height={20}
-              />
+              {isLoading ? (
+                <Loader2 className="animate-spin" size={20} />
+              ) : (
+                <Image
+                  src="/assets/icons/google-icon.svg"
+                  alt="Google"
+                  width={20}
+                  height={20}
+                />
+              )}
               CONTINUE WITH GOOGLE
             </button>
 

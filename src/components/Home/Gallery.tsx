@@ -147,7 +147,7 @@ export default function Gallery() {
           <h1
             className="text-9xl font-bold text-[#FFD58B] relative z-30"
             style={{
-              opacity: eyeAndTextOpacity,
+              opacity: eyeAndTextOpacity || 0,
               transition: "opacity 0.3s ease, filter 0.3s ease",
               filter: `blur(${eyeBlurAmount}px)`,
             }}

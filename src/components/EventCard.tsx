@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Cinzel } from "next/font/google";
+import Link from "next/link";
 
 const cinzel = Cinzel({
   subsets: ["latin"],
@@ -8,19 +9,23 @@ const cinzel = Cinzel({
 const frameCorner = "/assets/events/frame-corner.png";
 
 function EventCard({
+  eventId,
   eventName,
   eventImage,
   eventStartTime,
   eventEndTime,
   eventVenue,
   eventDay,
+  showRegister = true,
 }: {
+  eventId: string;
   eventName: string;
   eventImage: string;
   eventStartTime: string;
   eventEndTime: string;
   eventVenue: string;
   eventDay: number;
+  showRegister?: boolean;
 }) {
   return (
     <div className={`flex justify-center items-center`}>
@@ -51,28 +56,33 @@ function EventCard({
                   {eventStartTime} - {eventEndTime}
                 </span>
 
-                <span className="text-lg @[250px]:text-xl font-bold uppercase text-left self-start whitespace-nowrap">
-                  VENUE -
-                </span>
-                <div className="overflow-hidden h-16">
-                  <p className="text-base @[250px]:text-lg line-clamp-2">
-                    {eventVenue}
-                  </p>
-                </div>
-
                 <span className="text-lg @[250px]:text-xl font-bold uppercase text-left">
                   DAY -
                 </span>
                 <span className="text-base @[250px]:text-lg truncate">
                   {eventDay}
                 </span>
+
+                <span className="text-lg @[250px]:text-xl font-bold uppercase text-left self-start whitespace-nowrap">
+                  VENUE -
+                </span>
+                <div className="overflow-hidden h-14">
+                  <p className="text-base @[250px]:text-lg line-clamp-2">
+                    {eventVenue}
+                  </p>
+                </div>
               </div>
             </div>
-            <div className="self-end w-full">
-              <button className="bg-color2 text-color1 w-full py-2 rounded-md font-firlest text-xl @[250px]:text-2xl">
-                REGISTER NOW
-              </button>
-            </div>
+            {showRegister && (
+              <div className="self-end w-full">
+                <Link
+                  href={`/events/register/${eventId}`}
+                  className="bg-color2 text-color1 w-full block py-2 text-center rounded-md font-firlest text-xl @[250px]:text-2xl"
+                >
+                  REGISTER NOW
+                </Link>
+              </div>
+            )}
           </div>
         </Frame>
       </div>
