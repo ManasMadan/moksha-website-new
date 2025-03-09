@@ -1,13 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
+import { signOut, useSession } from "next-auth/react";
 
 const Navbar = () => {
+  const { data: session, status } = useSession();
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [currentPath, setCurrentPath] = useState(pathname);
+
+  useEffect(() => {
+    setCurrentPath(pathname);
+    console.log(pathname);
+  }, [pathname]);
 
   const navLinks = [
     { href: "/", label: "Home" },
@@ -15,7 +23,6 @@ const Navbar = () => {
     /* { href: "/sponsor", label: "Sponsor" }, */
     { href: "/team", label: "Team" },
   ];
-
 
   const menuVariants = {
     closed: {
@@ -38,7 +45,7 @@ const Navbar = () => {
 
   const linkVariants = {
     closed: { opacity: 0, y: -5 },
-    open: (i:number) => ({
+    open: (i: number) => ({
       opacity: 1,
       y: 0,
       transition: {
@@ -63,7 +70,6 @@ const Navbar = () => {
     open: { d: "M 3 27 L 27 3" },
   };
 
-  // Transition for underline indicator
   const underlineTransition = {
     type: "spring",
     stiffness: 300,
@@ -72,7 +78,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 w-full z-50  ${
+      className={`fixed top-0 left-0 w-full z-50 ${
         menuOpen
           ? "bg-black/70 backdrop-blur-lg"
           : "bg-black/5 backdrop-blur-md"
@@ -129,17 +135,12 @@ const Navbar = () => {
             <Link
               key={link.href}
               href={link.href}
-              className={`relative text-lg font-medium ${
-                pathname === link.href ? "text-color1" : "text-white"
+              className={`relative text-lg font-medium transition-colors duration-200 delay-75 hover:text-color1  ${
+                currentPath == link.href ? "text-color1" : "text-white"
               }`}
             >
-              <motion.span
-                whileHover={{ color: "#F6CE87" }}
-                transition={{ duration: 0.2 }}
-              >
-                {link.label}
-              </motion.span>
-              {pathname === link.href && (
+              {link.label}
+              {currentPath == link.href && (
                 <motion.span
                   layoutId="underline"
                   className="absolute left-0 bottom-[-2px] w-full h-[2px] bg-color1"
@@ -150,19 +151,59 @@ const Navbar = () => {
           ))}
         </div>
 
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.98 }}
-          transition={{ duration: 0.2 }}
-          className="flex space-x-4"
-        >
-          <Link
-            href="/auth/register"
-            className="bg-gradient-to-r from-white via-[#303030] to-white text-lg transition duration-300"
+        {!session?.user && (
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ duration: 0.2 }}
+            className="flex space-x-4"
           >
-            <span className="bg-black px-4 w-full h-full m-[1px]">Register</span>
-          </Link>
-        </motion.div>
+            <Link
+              href="/auth/register"
+              className="bg-gradient-to-r from-white via-[#303030] to-white text-lg transition duration-300"
+            >
+              <span className="bg-black px-4 w-full h-full m-[1px]">
+                Register
+              </span>
+            </Link>
+          </motion.div>
+        )}
+
+        {session?.user && (
+          <div className="flex gap-2 items-center">
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ duration: 0.2 }}
+              className="flex space-x-4"
+            >
+              <Link
+                href="/my-profile"
+                className="bg-gradient-to-r from-white via-[#303030] to-white text-lg transition duration-300"
+              >
+                <span className="bg-black px-4 w-full h-full m-[1px]">
+                  My Profile
+                </span>
+              </Link>
+            </motion.div>
+
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ duration: 0.2 }}
+              className="flex space-x-4"
+            >
+              <button      
+              onClick={() => signOut()}       
+                className="bg-gradient-to-r from-white via-[#303030] to-white text-lg transition duration-300"
+              >
+                <span className="bg-black px-4 w-full h-full m-[1px]">
+                  Log Out
+                </span>
+              </button>
+            </motion.div>
+          </div>
+        )}
       </div>
 
       <AnimatePresence initial={false}>
@@ -187,7 +228,7 @@ const Navbar = () => {
                   <Link
                     href={link.href}
                     className={`text-lg font-medium hover:text-color1 transition-colors duration-200 ${
-                      pathname === link.href ? "text-color1" : ""
+                      currentPath == link.href ? "text-color1" : ""
                     }`}
                     onClick={() => setMenuOpen(false)}
                   >

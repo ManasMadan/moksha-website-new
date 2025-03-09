@@ -125,6 +125,7 @@ export default function Page() {
                   return (
                     <EventCard
                       key={i}
+                      eventId={event._id}
                       eventName={event.name}
                       eventImage={event.imageKey}
                       eventStartTime={event.startTime}

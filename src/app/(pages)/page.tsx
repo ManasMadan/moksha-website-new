@@ -9,8 +9,8 @@ import {
   Gallery,
   Hero,
   PastSponsor,
+  Timeline
 } from "@/components/Home";
-import Timeline from "./timeline/page";
 
 const playfair = Playfair({ subsets: ["latin"] });
 

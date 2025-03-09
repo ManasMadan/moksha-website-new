@@ -5,5 +5,6 @@ import Gallery from "./Gallery";
 import Hero from "./Hero";
 import PastSponsor from "./PastSponsor";
 import Footer from "./Footer";
+import Timeline from "./Timeline";
 
-export { AboutUs, AfterMovie, FAQSection, Gallery, Hero, PastSponsor, Footer };
+export { AboutUs, AfterMovie, FAQSection, Gallery, Hero, PastSponsor, Footer, Timeline };
