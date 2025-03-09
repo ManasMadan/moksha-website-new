@@ -55,15 +55,12 @@ export const authOptions: AuthOptions = {
         token.isProfileComplete = user.isProfileComplete;
       }
 
-      // Handle Google login
       if (account && account.provider === "google") {
         await connectToDB();
 
-        // Check if user exists in database
         const existingUser = await User.findOne({ email: token.email });
 
         if (existingUser) {
-          // Update the Google ID if not already set
           if (!existingUser.googleId) {
             await User.findByIdAndUpdate(existingUser._id, {
               googleId: token.sub,
@@ -73,12 +70,11 @@ export const authOptions: AuthOptions = {
           token.id = existingUser._id.toString();
           token.isProfileComplete = existingUser.isProfileComplete;
         } else {
-          // Create new user with Google credentials
           const newUser = await User.create({
             email: token.email,
             fullName: token.name,
             googleId: token.sub,
-            isProfileComplete: false, // Require them to complete profile
+            isProfileComplete: false,
           });
 
           token.id = newUser._id.toString();
@@ -96,11 +92,9 @@ export const authOptions: AuthOptions = {
       return session;
     },
     async redirect({ url, baseUrl }) {
-      // Custom redirect logic based on isProfileComplete
       if (url.startsWith(baseUrl)) {
         return url;
       }
-      // Else, return to base URL
       return baseUrl;
     },
   },

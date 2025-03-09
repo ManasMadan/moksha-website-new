@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { signOut, useSession } from "next-auth/react";
+import { label } from "framer-motion/client";
 
 const Navbar = () => {
   const { data: session, status } = useSession();
@@ -22,6 +23,8 @@ const Navbar = () => {
     { href: "/events", label: "Events" },
     /* { href: "/sponsor", label: "Sponsor" }, */
     { href: "/team", label: "Team" },
+    { href:"#Timeline", label: "Timeline"},
+    { href:"#Footer", label: "Contact Us"}
   ];
 
   const menuVariants = {
@@ -128,7 +131,7 @@ const Navbar = () => {
               strokeLinecap="round"
             />
           </svg>
-        </motion.button>
+        </motion.button
 
         <div className="hidden md:flex space-x-6">
           {navLinks.map((link) => (

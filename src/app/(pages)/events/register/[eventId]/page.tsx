@@ -103,17 +103,16 @@ const RegistrationForm = () => {
   ) => {
     let newValue = value;
 
-    // As-you-type validations
     if (field === "name" || field === "college") {
-      newValue = value.replace(/[^A-Za-z\s]/g, ""); // Only allow letters and spaces
+      newValue = value.replace(/[^A-Za-z\s]/g, "");
     } else if (field === "phone") {
-      newValue = value.replace(/\D/g, "").slice(0, 10); // Only allow numbers, max 10 digits
+      newValue = value.replace(/\D/g, "").slice(0, 10);
     } else if (field === "email") {
-      newValue = value.replace(/[^\w@.-]/g, ""); // Only allow valid email characters
+      newValue = value.replace(/[^\w@.-]/g, "");
     } else if (field === "age") {
-      newValue = value.replace(/\D/g, "").slice(0, 2); // Only allow numbers, max 2 digits
+      newValue = value.replace(/\D/g, "").slice(0, 2);
     } else if (field === "yearOfPassing") {
-      newValue = value.replace(/\D/g, "").slice(0, 4); // Only allow numbers, max 4 digits
+      newValue = value.replace(/\D/g, "").slice(0, 4);
     }
 
     const newTeamMembers = [...teamMembers];
@@ -183,12 +182,10 @@ const RegistrationForm = () => {
       setIsSubmitting(true);
       setError(null);
       
-      // Create FormData object
       const formData = new FormData();
       formData.append("eventId", eventId);
       formData.append("teamMembersCount", teamMembers.length.toString());
       
-      // Add team members data
       teamMembers.forEach((member, index) => {
         formData.append(`teamMember[${index}].name`, member.name);
         formData.append(`teamMember[${index}].age`, member.age);
@@ -197,13 +194,11 @@ const RegistrationForm = () => {
         formData.append(`teamMember[${index}].phone`, member.phone || "");
         formData.append(`teamMember[${index}].yearOfPassing`, member.yearOfPassing);
       });
-      
-      // Add team name if it's a team event
+
       if (event.isTeamEvent) {
         formData.append("teamName", teamName);
       }
       
-      // Add custom input values
       Object.entries(customInputValues).forEach(([key, value]) => {
         formData.append(key, value);
       });
@@ -213,7 +208,6 @@ const RegistrationForm = () => {
       
       if (result.success) {
         toast.success("Registration successful!");
-        // Redirect to success page or dashboard
         setTimeout(() => router.push("/events/registration-complete"), 1000);
       } else {
         setError(result.error || "Registration failed");

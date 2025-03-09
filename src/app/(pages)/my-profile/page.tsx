@@ -55,7 +55,6 @@ export default function DashboardPage() {
     if (status === "unauthenticated") {
       router.push("/auth/login");
     } else if (status === "authenticated") {
-      // Check if profile is complete
       if (session.user && !session.user.isProfileComplete) {
         router.push(
           `/auth/complete-signup?email=${encodeURIComponent(
@@ -68,7 +67,6 @@ export default function DashboardPage() {
     }
   }, [status, router, session]);
 
-  // Filter events based on the selected day
   const filteredEvents = selectedDay
     ? userEvents.filter((event: { eventId: { day: number } }) => event.eventId.day === selectedDay)
     : userEvents;

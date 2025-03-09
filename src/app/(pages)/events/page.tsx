@@ -10,21 +10,13 @@ const cizel = Cinzel({
   subsets: ["latin"],
 });
 
-// Define the categories
 const CATEGORIES = [
   "ALL",
-  "DANCE",
-  "MUSIC",
-  "POETRY",
-  "QUIZ / TRIVIA / PUZZLES",
-  "VERBAL ARTS COMPETITION",
-  "DESIGN /ARTS/ CREATIVE BUILDING",
-  "ACTING/ PLAYS/ FILMS",
-  "FASHION/ TALENT SHOW",
-  "MINI FESTS",
-  "PHYSICAL GAMES",
-  "SIMULATION GAMES",
-  "SOCIAL EXPERIMENTS",
+  "Creative Arts",
+  "Music",
+  "Dance",
+  "Theatre",
+  "Culture and Lifestyle",
 ];
 
 export default function Page() {
@@ -33,7 +25,6 @@ export default function Page() {
   const [selectedCategory, setSelectedCategory] = useState("ALL");
   const [loading, setLoading] = useState(true);
 
-  // Fetch events on component mount
   useEffect(() => {
     async function fetchEvents() {
       try {
@@ -55,7 +46,6 @@ export default function Page() {
     fetchEvents();
   }, []);
 
-  // Filter events based on selected category
   const filteredEvents =
     selectedCategory === "ALL"
       ? events
@@ -90,7 +80,7 @@ export default function Page() {
           <h1 className="text-center text-white font-firlest text-7xl sm:text-9xl md:text-[145px]">
             Events
           </h1>
-          <div className="w-11/12 max-w-5xl mx-auto my-8 md:my-10 lg:my-12 flex justify-center items-center content-center flex-wrap gap-4 md:gap-6">
+          <div className="w-11/12 max-w-5xl mx-auto my-8 md:my-10 lg:my-12 flex justify-center items-center content-center flex-wrap gap-4 md:gap-6 uppercase">
             {CATEGORIES.map((category, i) => (
               <CustomButton
                 key={i}

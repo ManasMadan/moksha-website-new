@@ -8,7 +8,7 @@ import {
   Footer,
   Gallery,
   PastSponsor,
-  Timeline
+  Timeline,
 } from "@/components/Home";
 import Navbar from "@/components/NavBar";
 import { cn } from "@/lib/utils";
@@ -56,7 +56,6 @@ export default function Home() {
       animatedLogoRef.current.style.width = `${finalLogoBoundingBox.width}px`;
       animatedLogoRef.current.style.height = `${finalLogoBoundingBox.height}px`;
 
-      // Give the birds enough time to animate (1000ms for fade-in + 1000ms for movement)
       setTimeout(() => {
         setAnimationStage("moving");
       }, 2400);
@@ -79,7 +78,6 @@ export default function Home() {
 
   return (
     <div className={cn({ "overflow-hidden h-screen relative": isAnimating })}>
-      {/* Navbar */}
       <div
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-1000 ease-in-out",
@@ -102,7 +100,6 @@ export default function Home() {
         >
           <div className="w-full">
             <div className="w-3/4 max-w-6xl mx-auto">
-              {/* Static Logo (Only Visible After Animation Completes) */}
               <div
                 ref={finalLogoRef}
                 style={{
@@ -121,10 +118,8 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Animated Logo (Scaling & Moving) */}
             {isAnimating && <AnimatingLogo animatedLogoRef={animatedLogoRef} />}
 
-            {/* Title */}
             <h1
               className={cn(
                 "text-5xl text-[#FFD58B] text-center mt-8 transition-all duration-1000 ease-in-out",
@@ -138,7 +133,6 @@ export default function Home() {
             </h1>
           </div>
 
-          {/* About Section */}
           <div
             className={cn(`w-full`, playfair.className, {
               "opacity-0": isAnimating,
@@ -150,13 +144,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section
-          className="relative flex flex-col min-h-screen bg-[#131313] w-full bg-cover bg-no-repeat pt-40 z-40"
-          style={{
-            backgroundImage: "url('/assets/home/section2Bg.png')",
-            backgroundPositionX: "center",
-          }}
-        >
+        <section className="relative flex flex-col min-h-screen bg-[#131313] w-full pt-40 z-40">
           <Gallery />
           <AfterMovie />
           <PastSponsor />
@@ -178,11 +166,9 @@ function AnimatingLogo({ animatedLogoRef }: { animatedLogoRef: any }) {
   const [birdsInPosition, setBirdsInPosition] = useState(false);
 
   useEffect(() => {
-    // Show birds after a short delay
     const showBirdsTimer = setTimeout(() => {
       setBirdsVisible(true);
 
-      // Move birds to their final positions after they appear
       setTimeout(() => {
         setBirdsInPosition(true);
       }, 800);
@@ -242,7 +228,7 @@ function AnimatingLogo({ animatedLogoRef }: { animatedLogoRef: any }) {
                   "opacity 0.8s ease-in-out, transform 1s ease-in-out",
                 transform: birdsInPosition
                   ? "translate(0, 0)"
-                  : "translate(-100%, 0)", // Start from left edge of screen
+                  : "translate(-100%, 0)",
                 transformOrigin: "center",
               }}
               x="-234"
@@ -261,7 +247,7 @@ function AnimatingLogo({ animatedLogoRef }: { animatedLogoRef: any }) {
                   "opacity 0.8s ease-in-out, transform 1s ease-in-out",
                 transform: birdsInPosition
                   ? "translate(0, 0)"
-                  : "translate(100%, 0)", // Start from right edge of screen
+                  : "translate(100%, 0)",
                 transformOrigin: "center",
               }}
               x="898"
@@ -280,7 +266,7 @@ function AnimatingLogo({ animatedLogoRef }: { animatedLogoRef: any }) {
                   "opacity 0.8s ease-in-out, transform 1s ease-in-out",
                 transform: birdsInPosition
                   ? "translate(0, 0)"
-                  : "translate(0, 100%)", // Start from bottom of screen
+                  : "translate(0, 100%)",
                 transformOrigin: "center",
               }}
               x="447"

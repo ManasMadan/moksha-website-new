@@ -4,9 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, Suspense } from "react";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
-import { Koulen } from "next/font/google";
+import { Koulen, Playfair } from "next/font/google";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
+
+const playfair = Playfair({
+  subsets:["latin"]
+})
 
 const koulen = Koulen({
   weight: "400",
@@ -17,48 +21,48 @@ function LoginPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const error = searchParams.get("error");
-  
+
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(error || "");
   const [success, setSuccess] = useState("");
-  
+
   const [formData, setFormData] = useState({
     email: "",
-    password: ""
+    password: "",
   });
 
-  const handleChange = (e: { target: { name: any; value: any; }; }) => {
+  const handleChange = (e: { target: { name: any; value: any } }) => {
     const { name, value } = e.target;
-    
+
     let newValue = value;
-    
+
     if (name === "email") {
-      newValue = value.replace(/[^\w@.-]/g, '');
+      newValue = value.replace(/[^\w@.-]/g, "");
     }
-    
-    setFormData(prev => ({
+
+    setFormData((prev) => ({
       ...prev,
-      [name]: newValue
+      [name]: newValue,
     }));
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const { name } = e.target as HTMLInputElement;
-    
+
     if (name === "email") {
       if (
-        (e.key !== "Backspace" && 
-         e.key !== "Delete" && 
-         e.key !== "ArrowLeft" && 
-         e.key !== "ArrowRight" && 
-         e.key !== "Tab" && 
-         e.key !== "Enter" && 
-         e.key !== "@" && 
-         e.key !== "." && 
-         e.key !== "_" && 
-         e.key !== "-" && 
-         !/^[A-Za-z0-9]$/.test(e.key))
+        e.key !== "Backspace" &&
+        e.key !== "Delete" &&
+        e.key !== "ArrowLeft" &&
+        e.key !== "ArrowRight" &&
+        e.key !== "Tab" &&
+        e.key !== "Enter" &&
+        e.key !== "@" &&
+        e.key !== "." &&
+        e.key !== "_" &&
+        e.key !== "-" &&
+        !/^[A-Za-z0-9]$/.test(e.key)
       ) {
         e.preventDefault();
       }
@@ -68,7 +72,8 @@ function LoginPageContent() {
   const handleGoogleSignIn = async () => {
     try {
       setIsLoading(true);
-      await signIn("google", { callbackUrl: "/my-profile" });
+      await signIn("google");
+      router.push("/my-profile");
     } catch (error) {
       console.error("Google sign-in error:", error);
       setErrorMessage("Failed to sign in with Google");
@@ -81,21 +86,21 @@ function LoginPageContent() {
     e.preventDefault();
     setErrorMessage("");
     setSuccess("");
-    
+
     if (!formData.email || !formData.password) {
       setErrorMessage("Email and password are required");
       return;
     }
-    
+
     setIsLoading(true);
-    
+
     try {
       const result = await signIn("credentials", {
         email: formData.email,
         password: formData.password,
         redirect: false,
       });
-      
+
       if (result?.error) {
         setErrorMessage("Invalid email or password");
       } else {
@@ -117,7 +122,7 @@ function LoginPageContent() {
   }, [errorMessage]);
 
   return (
-    <div className="min-h-screen w-full relative bg-black flex items-center justify-center">
+    <div className={`min-h-screen w-full relative bg-black flex items-center justify-center ${playfair.className}`}>
       <div className="absolute inset-0 z-0">
         <Image
           src="/assets/auth/loginBg.png"
@@ -245,7 +250,9 @@ function LoginPageContent() {
 
 export default function LoginPage() {
   return (
-    <Suspense fallback={<div className="text-white text-center">Loading...</div>}>
+    <Suspense
+      fallback={<div className="text-white text-center">Loading...</div>}
+    >
       <LoginPageContent />
     </Suspense>
   );

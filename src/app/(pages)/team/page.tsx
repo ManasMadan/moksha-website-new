@@ -209,7 +209,7 @@ const TeamPage: React.FC = () => {
           </h2>
 
           <div
-            className="grid "
+            className="grid max-w-6xl mx-auto"
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",

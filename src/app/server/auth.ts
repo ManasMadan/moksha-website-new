@@ -16,7 +16,6 @@ export async function registerUser(formData: FormData) {
     const password = formData.get("password") as string;
     const confirmPassword = formData.get("confirmPassword") as string;
 
-    // Validation
     if (
       !fullName ||
       !mobile ||
@@ -47,16 +46,13 @@ export async function registerUser(formData: FormData) {
 
     await connectToDB();
 
-    // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return { error: "User with this email already exists" };
     }
 
-    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create new user
     const newUser = await User.create({
       fullName,
       mobile,
@@ -82,7 +78,6 @@ export async function completeSignup(formData: FormData) {
     const collegeName = formData.get("collegeName") as string;
     const dob = formData.get("dob") as string;
 
-    // Validation
     if (!email || !mobile || !collegeName || !dob) {
       return { error: "All fields are required" };
     }
@@ -93,7 +88,6 @@ export async function completeSignup(formData: FormData) {
 
     await connectToDB();
 
-    // Update user profile
     await User.updateOne(
       { email },
       {
@@ -118,20 +112,17 @@ export async function loginUser(formData: FormData) {
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
 
-    // Validation
     if (!email || !password) {
       return { error: "Email and password are required" };
     }
 
     await connectToDB();
 
-    // Find user
     const user = await User.findOne({ email });
     if (!user) {
       return { error: "Invalid email or password" };
     }
 
-    // Check password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return { error: "Invalid email or password" };
@@ -148,14 +139,12 @@ export async function getUserDetails(email: string) {
   try {
     await connectToDB();
 
-    // Find user by email
     const user = await User.findOne({ email });
 
     if (!user) {
       return { error: "User not found" };
     }
 
-    // Return user details without sensitive information
     return {
       success: true,
       userData: {

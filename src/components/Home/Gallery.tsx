@@ -1,8 +1,9 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
-import { useEffect, useRef, useState } from "react";
+/* import { useEffect, useRef, useState } from "react"; */
 
 export default function Gallery() {
-  const [scrollY, setScrollY] = useState(0);
+/*   const [scrollY, setScrollY] = useState(0);
   const [windowHeight, setWindowHeight] = useState(0);
   const galleryRef = useRef<HTMLDivElement>(null);
   const [sectionOffset, setSectionOffset] = useState(0);
@@ -48,10 +49,10 @@ export default function Gallery() {
   const eyeAndTextOpacity = Math.max(
     0,
     1 - relativeScroll / (transitionRange * 0.6)
-  );
+  ); */
 
   return (
-    <div className="w-full" ref={galleryRef}>
+    <div className="w-full" /* ref={galleryRef} */>
       <div className="relative">
         <div className="flex flex-col items-center justify-center h-screen w-full overflow-hidden sticky top-0">
           <div className="absolute inset-0 z-10">
@@ -124,11 +125,11 @@ export default function Gallery() {
 
           <div
             className="absolute inset-0 z-20"
-            style={{
+            /* style={{
               opacity: eyeAndTextOpacity || 0,
               transition: "opacity 0.3s ease, filter 0.3s ease",
               filter: `blur(${eyeBlurAmount}px)`,
-            }}
+            }} */
           >
             <div
               className="absolute inset-0 bg-center bg-no-repeat bg-cover"
@@ -146,11 +147,11 @@ export default function Gallery() {
 
           <h1
             className="text-9xl font-bold text-[#FFD58B] relative z-30"
-            style={{
+            /* style={{
               opacity: eyeAndTextOpacity || 0,
               transition: "opacity 0.3s ease, filter 0.3s ease",
               filter: `blur(${eyeBlurAmount}px)`,
-            }}
+            }} */
           >
             Gallery
           </h1>

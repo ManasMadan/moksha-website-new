@@ -12,12 +12,10 @@ export async function middleware(req: NextRequest) {
     secret: process.env.NEXTAUTH_SECRET,
   });
 
-  // Redirect to login if not logged in and accessing protected route
   if (!token && (isPrivatePath || path === "/auth/complete-profile")) {
     return NextResponse.redirect(new URL("/auth/login", req.url));
   }
 
-  // Check if profile is complete for authenticated users
   if (token && !token.isProfileComplete && path !== "/auth/complete-profile") {
     return NextResponse.redirect(
       new URL(
@@ -27,7 +25,6 @@ export async function middleware(req: NextRequest) {
     );
   }
 
-  // Redirect to dashboard if already logged in and accessing auth pages
   if (token && token.isProfileComplete && isAuthPaths) {
     return NextResponse.redirect(new URL("/my-profile", req.url));
   }
@@ -35,7 +32,6 @@ export async function middleware(req: NextRequest) {
   return NextResponse.next();
 }
 
-// Specify which paths this middleware should run on
 export const config = {
   matcher: [
     "/events/register/:id",

@@ -6,6 +6,7 @@ export default function Footer() {
     <section
       className="min-h-screen w-full text-[#FFDC9E] border-b-[15px] border-[#FFDC9E] flex flex-col z-50 relative bg-center bg-cover bg-no-repeat"
       style={{ backgroundImage: "url('/assets/home/footer.png')" }}
+      id="Footer"
     >
       <div className="container mx-auto px-4 py-8 flex-1 flex flex-col">
         <header className="flex justify-end mb-10 pt-5">
@@ -21,7 +22,7 @@ export default function Footer() {
 
         <div className="flex-1 flex flex-col md:flex-row justify-between items-end">
           <nav className="mb-10 md:mb-0">
-            <ul className="flex flex-col gap-6 font-[655] text-end">
+            <ul className="flex flex-col gap-6 font-[655] text-end md:text-start">
               <li>
                 <Link
                   href="/auth/register"

@@ -4,10 +4,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
-import { Koulen } from "next/font/google";
+import { Koulen, Playfair } from "next/font/google";
 import { registerUser } from "@/app/server/auth";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+
+const playfair = Playfair({
+  subsets:["latin"]
+})
 
 const koulen = Koulen({
   weight: "400",
@@ -102,6 +106,7 @@ export default function RegisterPage() {
     try {
       setIsLoading(true);
       await signIn("google");
+      router.push("/my-profile");
     } catch (error) {
       console.error("Google sign-in error:", error);
       setError("Failed to sign in with Google");
@@ -153,7 +158,7 @@ export default function RegisterPage() {
   }, [error]);
 
   return (
-    <div className="min-h-screen w-full relative bg-black flex items-center justify-center pt-12">
+    <div className={`min-h-screen w-full relative bg-black flex items-center justify-center ${playfair.className}`}>
       <div className="absolute inset-0 z-0">
         <Image
           src="/assets/auth/registerBg.png"
@@ -170,7 +175,7 @@ export default function RegisterPage() {
             SIGN-UP
           </h1>
           <p className="text-white text-center text-sm mb-8">
-            PLEASE FILL the FORM TO CREATE AN ACCOUNT
+            PLEASE FILL THE FORM TO CREATE AN ACCOUNT
           </p>
 
           {error && (

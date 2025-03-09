@@ -19,9 +19,9 @@ const data = {
     "/assets/timeline/23_7.jpg",
   ],
   2022: [
-    "/assets/timeline/22_1.jpeg",
     "/assets/timeline/22_2.jpeg",
     "/assets/timeline/22_3.jpeg",
+    "/assets/timeline/22_1.jpeg",
     "/assets/timeline/22_4.jpeg",
   ],
 };
@@ -35,26 +35,24 @@ const Timeline = () => {
   const itemSpacing = 10;
   const yearSpacing = 7;
   const totalHeight =
-    totalItems * itemSpacing + Object.keys(data).length * yearSpacing + 20;
+    totalItems * itemSpacing + Object.keys(data).length * yearSpacing + 5;
 
   return (
-    <div className="min-h-screen bg-[#131313] px-8 pt-8 pb-44 relative">
-      <div className="fixed left-5 top-0 w-[0.5px] h-full bg-[#FFFFFF] invisible md:visible" />
-      <div className="fixed right-5 top-0 w-[0.5px] h-full bg-[#FFFFFF] invisible md:visible" />
-      <div className="fixed right-8 top-0 w-[0.5px] h-full bg-[#FFFFFF] invisible md:visible" />
-    
-      <div className="absolute inset-0 z-10">
+    <div className="min-h-screen bg-[#131313] px-8 pt-8 pb-44 relative" id="Timeline">
+      <div className="fixed left-10 top-0 w-[0.8px] h-full bg-[#FFFFFF] invisible md:visible" />
+      <div className="fixed right-10 top-0 w-[0.8px] h-full bg-[#FFFFFF] invisible md:visible" />
+      <div className="fixed right-14 top-0 w-[0.8px] h-full bg-[#FFFFFF] invisible md:visible" />
+      <div className="absolute inset-0 z-0">
         <Image
-          src="/assets/timeline/bg2.png"
+          src="/assets/timeline/bg3.png"
           alt="Background"
           fill
           className="object-cover object-center"
           priority
         />
       </div>
-
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-white text-5xl md:text-6xl lg:text-7xl text-center my-10 font-serif tracking-wider font-semibold">
+        <h1 className="text-white text-5xl md:text-6xl lg:text-7xl text-center my-10 font-serif tracking-wider font-semibold relative z-30">
           TIMELINE
         </h1>
 
@@ -138,7 +136,7 @@ const Timeline = () => {
                               : "scale-x-[-1]"
                           }`}
                         >
-                          <div className="md:w-32 w-28 h-28 md:h-32 border-2 border-[#b8860b] bg-black">
+                          <div className="md:w-28 w-24 h-28 md:h-32 border-2 border-[#b8860b] bg-black">
                             <img
                               src={image}
                               alt={`Timeline ${year} Item ${itemIndex + 1}`}

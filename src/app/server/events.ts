@@ -1,47 +1,42 @@
-"use server";
+'use server';
 
 import { revalidatePath } from "next/cache";
-import clientPromise from "@/lib/mongodb";
-import { ObjectId } from "mongodb";
+import { connectToDB as connectDB } from "@/lib/mongoose";
+import Event from "@/lib/models/Event";
+import mongoose from "mongoose";
 
 export async function getEvents() {
   try {
-    const client = await clientPromise;
-    const db = client.db("moksha-dashboard");
-
-    const events = await db
-      .collection("events")
-      .find({})
-      .sort({ createdAt: -1 })
-      .toArray();
-
+    await connectDB();
+    
+    const events = await Event.find({})
+      .sort({ day: 1, createdAt: -1 })
+      .lean();
+    
     return { events: JSON.parse(JSON.stringify(events)), error: null };
-  } catch (error) {
+  } catch (error: any) {
     console.error("Failed to fetch events:", error);
-    return { events: [], error: "Failed to fetch events" };
+    return { events: [], error: error.message || "Failed to fetch events" };
   }
 }
 
 export async function getEvent(id: string) {
   try {
-    if (!ObjectId.isValid(id)) {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
       return { event: null, error: "Invalid event ID" };
     }
 
-    const client = await clientPromise;
-    const db = client.db("moksha-dashboard");
-
-    const event = await db
-      .collection("events")
-      .findOne({ _id: new ObjectId(id) });
-
+    await connectDB();
+    
+    const event = await Event.findById(id).lean();
+    
     if (!event) {
       return { event: null, error: "Event not found" };
     }
-
+    
     return { event: JSON.parse(JSON.stringify(event)), error: null };
-  } catch (error) {
+  } catch (error: any) {
     console.error("Failed to fetch event:", error);
-    return { event: null, error: "Failed to fetch event" };
+    return { event: null, error: error.message || "Failed to fetch event" };
   }
 }

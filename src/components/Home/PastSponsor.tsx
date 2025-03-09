@@ -49,8 +49,8 @@ export default function PastSponsor() {
                         ></div>
                       </div>
 
-                      <div className="relative z-10 h-full w-full p-2 bg-white">
-                        <Image 
+                      <div className="relative z-10 h-full w-full m-1 p-2 bg-white">
+                      <Image 
                           src={`/assets/home/past-sponsors/${imageNumber}.png`} 
                           fill 
                           alt={`sponsor ${imageNumber}`} 

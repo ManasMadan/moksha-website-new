@@ -12,6 +12,19 @@ const cinzel = Cinzel({
 export const metadata: Metadata = {
   title: "Moksha 2025",
   description: "The official website of Moksha 2025",
+  openGraph: {
+    title: "Moksha 2025",
+    description: "The official website of Moksha 2025",
+    images: [
+      {
+        url: "https://preview.mokshansut.com/og.png",
+        width: 1200,
+        height: 630,
+        alt: "Moksha 2025",
+      },
+    ],
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -25,7 +38,7 @@ export default function RootLayout({
         <SessionProvider>
           <NavBar />
           {children}
-          <Toaster position="bottom-center"/>
+          <Toaster position="bottom-center" />
         </SessionProvider>
       </body>
     </html>
