@@ -58,7 +58,6 @@ export default function RootLayout({
       </head>
       <body className={`${cinzel.className} antialiased`}>
         <SessionProvider>
-          <NavBar />
           {children}
           <Toaster position="bottom-center" />
         </SessionProvider>

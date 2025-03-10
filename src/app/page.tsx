@@ -13,6 +13,7 @@ import {
 import Navbar from "@/components/NavBar";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { Element } from "react-scroll";
 
 const playfair = Playfair({ subsets: ["latin"] });
 
@@ -149,13 +150,17 @@ export default function Home() {
           <AfterMovie />
           <PastSponsor />
         </section>
-        <Timeline />
+        <Element name="Timeline">
+          <Timeline />
+        </Element>
 
         <div className={`w-full ${playfair.className}`}>
           <FAQSection />
         </div>
 
-        <Footer />
+        <Element name="Footer">
+          <Footer />
+        </Element>
       </div>
     </div>
   );

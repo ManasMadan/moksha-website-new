@@ -79,7 +79,7 @@ function EventCard({
                   href={`/events/register/${eventId}`}
                   className="bg-color2 text-color1 w-full block py-2 text-center rounded-md font-firlest text-xl @[250px]:text-2xl"
                 >
-                  REGISTER NOW
+                  REGIS TER NOW
                 </Link>
               </div>
             )}

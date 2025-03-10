@@ -2,15 +2,16 @@
 
 import React from "react";
 import { useState, useEffect } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import NextLink from "next/link";
+import { Link as ScrollLink } from "react-scroll";
+import { usePathname, useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { signOut, useSession } from "next-auth/react";
-import { label } from "framer-motion/client";
 
 const Navbar = () => {
   const { data: session, status } = useSession();
   const pathname = usePathname();
+  const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const [currentPath, setCurrentPath] = useState(pathname);
 
@@ -20,12 +21,12 @@ const Navbar = () => {
   }, [pathname]);
 
   const navLinks = [
-    { href: "/", label: "Home" },
-    { href: "/events", label: "Events" },
+    { href: "/", label: "Home", isScrollLink: false },
+    { href: "/events", label: "Events", isScrollLink: false },
     /* { href: "/sponsor", label: "Sponsor" }, */
-    { href: "/team", label: "Team" },
-    { href:"#Timeline", label: "Timeline"},
-    { href:"#Footer", label: "Contact Us"}
+    { href: "/team", label: "Team", isScrollLink: false },
+    { href: "Timeline", label: "Timeline", isScrollLink: true },
+    { href: "Footer", label: "Contact Us", isScrollLink: true }
   ];
 
   const menuVariants = {
@@ -80,8 +81,76 @@ const Navbar = () => {
     damping: 30,
   };
 
+  const handleScrollLinkClick = (target: any, onClick: (() => void) | null = null) => {
+    if (pathname !== "/") {
+      router.push(`/#${target}`);
+    }
+
+    if (onClick) {
+      onClick();
+    }
+  };
+
+
+  const renderLink = (link: { href: any; label: any; isScrollLink: any; }, className: string | undefined, onClick: (() => void) | null = null) => {
+    if (link.isScrollLink) {
+      if (pathname === "/") {
+        return (
+          <ScrollLink
+            to={link.href}
+            spy={true}
+            smooth={true}
+            duration={1000}
+            className={className}
+            onClick={() => {
+              if (onClick) onClick();
+            }}
+          >
+            {link.label}
+            {currentPath === link.href && (
+              <motion.span
+                layoutId="underline"
+                className="absolute left-0 bottom-[-2px] w-full h-[2px] bg-color1"
+                transition={underlineTransition}
+              />
+            )}
+          </ScrollLink>
+        );
+      } else {
+        return (
+          <button
+            className={className}
+            onClick={() => handleScrollLinkClick(link.href, onClick)}
+          >
+            {link.label}
+            {currentPath === link.href && (
+              <motion.span
+                layoutId="underline"
+                className="absolute left-0 bottom-[-2px] w-full h-[2px] bg-color1"
+                transition={underlineTransition}
+              />
+            )}
+          </button>
+        );
+      }
+    } else {
+      return (
+        <NextLink href={link.href} className={className} onClick={onClick || undefined}>
+          {link.label}
+          {currentPath === link.href && (
+            <motion.span
+              layoutId="underline"
+              className="absolute left-0 bottom-[-2px] w-full h-[2px] bg-color1"
+              transition={underlineTransition}
+            />
+          )}
+        </NextLink>
+      );
+    }
+  };
+
   return (
-    <nav className={`fixed top-0 left-0 w-full z-50 ${
+    <nav className={`fixed top-0 left-0 w-full z-[60] ${
         menuOpen
           ? "bg-black/70 backdrop-blur-lg"
           : "bg-black/5 backdrop-blur-md"
@@ -135,22 +204,14 @@ const Navbar = () => {
 
         <div className="hidden md:flex space-x-6">
           {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`relative text-lg font-medium transition-colors duration-200 delay-75 hover:text-color1  ${
-                currentPath == link.href ? "text-color1" : "text-white"
-              }`}
-            >
-              {link.label}
-              {currentPath == link.href && (
-                <motion.span
-                  layoutId="underline"
-                  className="absolute left-0 bottom-[-2px] w-full h-[2px] bg-color1"
-                  transition={underlineTransition}
-                />
+            <div key={link.href} className="relative">
+              {renderLink(
+                link,
+                `relative text-lg font-medium transition-colors duration-200 delay-75 hover:text-color1 ${
+                  currentPath === link.href ? "text-color1" : "text-white"
+                }`
               )}
-            </Link>
+            </div>
           ))}
         </div>
 
@@ -161,14 +222,14 @@ const Navbar = () => {
             transition={{ duration: 0.2 }}
             className="flex space-x-4"
           >
-            <Link
+            <NextLink
               href="/auth/register"
               className="bg-gradient-to-r from-white via-[#303030] to-white text-lg transition duration-300"
             >
               <span className="bg-black px-4 w-full h-full m-[1px]">
                 Register
               </span>
-            </Link>
+            </NextLink>
           </motion.div>
         )}
 
@@ -180,14 +241,14 @@ const Navbar = () => {
               transition={{ duration: 0.2 }}
               className="flex space-x-4"
             >
-              <Link
+              <NextLink
                 href="/my-profile"
                 className="bg-gradient-to-r from-white via-[#303030] to-white text-lg transition duration-300"
               >
                 <span className="bg-black px-4 w-full h-full m-[1px]">
                   My Profile
                 </span>
-              </Link>
+              </NextLink>
             </motion.div>
 
             <motion.div
@@ -228,15 +289,13 @@ const Navbar = () => {
                   animate="open"
                   exit="closed"
                 >
-                  <Link
-                    href={link.href}
-                    className={`text-lg font-medium hover:text-color1 transition-colors duration-200 ${
-                      currentPath == link.href ? "text-color1" : ""
-                    }`}
-                    onClick={() => setMenuOpen(false)}
-                  >
-                    {link.label}
-                  </Link>
+                  {renderLink(
+                    link,
+                    `text-lg font-medium hover:text-color1 transition-colors duration-200 ${
+                      currentPath === link.href ? "text-color1" : ""
+                    }`,
+                    () => setMenuOpen(false)
+                  )}
                 </motion.div>
               ))}
             </div>

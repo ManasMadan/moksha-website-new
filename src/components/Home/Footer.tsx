@@ -49,6 +49,14 @@ export default function Footer() {
               </li>
               <li>
                 <Link
+                  href="/cl-leaderboard"
+                  className="text-2xl text-[#FFDC9E] hover:text-white transition-colors"
+                >
+                  CL Leaderboard
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="mailto:moksha@nsut.ac.in"
                   className="text-2xl text-[#FFDC9E] hover:text-white transition-colors"
                 >
