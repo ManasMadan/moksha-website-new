@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -80,8 +81,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav
-      className={`fixed top-0 left-0 w-full z-50 ${
+    <nav className={`fixed top-0 left-0 w-full z-50 ${
         menuOpen
           ? "bg-black/70 backdrop-blur-lg"
           : "bg-black/5 backdrop-blur-md"
@@ -131,7 +131,7 @@ const Navbar = () => {
               strokeLinecap="round"
             />
           </svg>
-        </motion.button
+        </motion.button>
 
         <div className="hidden md:flex space-x-6">
           {navLinks.map((link) => (
