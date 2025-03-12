@@ -46,6 +46,8 @@ export default function Home() {
   const bgOpacity = styleStateIndex === styleStates.length - 1 ? 1 : 0;
   const isAnimating = styleStateIndex < styleStates.length - 1;
 
+  const [showNavbar, setShowNavbar] = useState(true);
+
   useEffect(() => {
     setTimeout(() => {
       setStyleStateIndex((prev) => prev + 1);
@@ -63,7 +65,8 @@ export default function Home() {
           {
             "opacity-0 -translate-y-full": isAnimating,
             "opacity-100 translate-y-0": !isAnimating,
-          }
+          },
+          { "opacity-0 -translate-y-full": !showNavbar }
         )}
       >
         <Navbar />
@@ -97,7 +100,7 @@ export default function Home() {
         </div>
 
         <section className="relative flex flex-col min-h-screen bg-[#131313] w-full z-40">
-          <Gallery />
+          <Gallery setShowNavbar={setShowNavbar} />
           <AfterMovie />
           <PastSponsor />
         </section>
