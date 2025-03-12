@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 
 const data = {
@@ -6,42 +6,71 @@ const data = {
     "/assets/timeline/24_1.jpg",
     "/assets/timeline/24_2.jpg",
     "/assets/timeline/24_3.jpg",
-    "/assets/timeline/24_4.jpg",
-    "/assets/timeline/24_5.jpg",
   ],
   2023: [
     "/assets/timeline/23_1.jpg",
     "/assets/timeline/23_2.jpg",
     "/assets/timeline/23_3.jpg",
     "/assets/timeline/23_4.jpg",
-    "/assets/timeline/23_5.jpg",
-    "/assets/timeline/23_6.jpg",
-    "/assets/timeline/23_7.jpg",
   ],
   2022: [
     "/assets/timeline/22_2.jpeg",
     "/assets/timeline/22_3.jpeg",
     "/assets/timeline/22_1.jpeg",
-    "/assets/timeline/22_4.jpeg",
   ],
 };
 
 const Timeline = () => {
+  const [responsiveValues, setResponsiveValues] = useState({
+    itemSpacing: 20,
+    yearSpacing: 7,
+    yearOffset: 10
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 640) {
+        setResponsiveValues({
+          itemSpacing: 12,
+          yearSpacing: 5,
+          yearOffset: 7
+        });
+      } else if (window.innerWidth < 768) {
+        setResponsiveValues({
+          itemSpacing: 18,
+          yearSpacing: 6,
+          yearOffset: 8
+        });
+      } else if (window.innerWidth < 1024) {
+        setResponsiveValues({
+          itemSpacing: 20,
+          yearSpacing: 7,
+          yearOffset: 10
+        });
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const { itemSpacing, yearSpacing, yearOffset } = responsiveValues;
+
   const totalItems = Object.values(data).reduce(
     (acc, images) => acc + images.length,
     0
   );
 
-  const itemSpacing = 10;
-  const yearSpacing = 7;
   const totalHeight =
     totalItems * itemSpacing + Object.keys(data).length * yearSpacing + 5;
 
   return (
     <div className="min-h-screen bg-[#131313] px-8 pt-8 pb-44 relative" id="Timeline">
-      <div className="fixed left-10 top-0 w-[0.8px] h-full bg-[#FFFFFF] invisible md:visible" />
-      <div className="fixed right-10 top-0 w-[0.8px] h-full bg-[#FFFFFF] invisible md:visible" />
-      <div className="fixed right-14 top-0 w-[0.8px] h-full bg-[#FFFFFF] invisible md:visible" />
+      <div className="absolute left-10 top-0 w-[0.8px] h-full bg-[#FFFFFF] invisible md:visible" />
+      <div className="absolute right-10 top-0 w-[0.8px] h-full bg-[#FFFFFF] invisible md:visible" />
+      <div className="absolute right-14 top-0 w-[0.8px] h-full bg-[#FFFFFF] invisible md:visible" />
       <div className="absolute inset-0 z-0">
         <Image
           src="/assets/timeline/bg3.png"
@@ -114,7 +143,7 @@ const Timeline = () => {
 
                   {images.map((image, itemIndex) => {
                     const itemPosition =
-                      yearPosition + 6 + itemIndex * itemSpacing;
+                      yearPosition + yearOffset + itemIndex * itemSpacing;
                     const isEvenItem = itemIndex % 2 === 0;
 
                     return (
@@ -130,13 +159,13 @@ const Timeline = () => {
                         </div>
 
                         <div
-                          className={`absolute flex items-center justify-center z-10 -top-[40px] md:-top-[28px] ${
+                          className={`absolute flex items-center justify-center z-10 -top-[40px] sm:-top-[62px] md:-top-[92px] ${
                             isEvenItem
                               ? "-translate-x-[calc(100%)] scale-100"
                               : "scale-x-[-1]"
                           }`}
                         >
-                          <div className="md:w-28 w-24 h-28 md:h-32 border-2 border-[#b8860b] bg-black">
+                          <div className="md:w-60 w-24 sm:w-40 h-28 sm:h-44 md:h-64 border-2 border-[#b8860b] bg-black">
                             <img
                               src={image}
                               alt={`Timeline ${year} Item ${itemIndex + 1}`}
@@ -145,7 +174,7 @@ const Timeline = () => {
                           </div>
 
                           <div className="relative w-0 h-0 border-t-[64px] border-b-[64px] border-l-[50px] md:border-l-[128px] border-transparent">
-                            <div className="absolute -top-[56px] md:-top-[64px] -left-[50px] md:-left-[128px] w-[50px] md:w-[128px] h-[112px] md:h-[128px] bg-gradient-to-r from-[#FFD58B] to-[#775518] clip-triangle"></div>
+                            <div className="absolute -top-[56px] sm:-top-[90px] md:-top-[128px] -left-[50px] md:-left-[128px] w-[50px] md:w-[128px] sm:h-[176px] h-[112px] md:h-[256px] bg-gradient-to-r from-[#FFD58B] to-[#775518] clip-triangle"></div>
                           </div>
                         </div>
                       </div>

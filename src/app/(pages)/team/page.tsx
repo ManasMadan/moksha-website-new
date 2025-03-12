@@ -158,7 +158,7 @@ const TeamPage: React.FC = () => {
           <span className="pl-4 md:pl-8 lg:pl-16">TEAM</span>
         </h1>
 
-        <div className="mb-96">
+        <div className="mb-96 md:mb-72 lg:mb-44 ">
           <h2 className="text-4xl md:text-5xl lg:text-7xl text-center font-bold mb-12 lg:mb-20 pb-6 lg:pb-14 text-[#FFD58B] border-b border-[#EEECEC]">
             CORE TEAM
           </h2>

@@ -10,8 +10,8 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 const playfair = Playfair({
-  subsets:["latin"]
-})
+  subsets: ["latin"],
+});
 
 const koulen = Koulen({
   weight: "400",
@@ -139,8 +139,12 @@ export default function RegisterPage() {
         setError(result.error);
       } else if (result.success) {
         setSuccess(result.success);
-        setTimeout(() => {
-          router.push("/auth/login");
+        await signIn("credentials", {
+          email: formData.email,
+          password: formData.password,
+        });
+         setTimeout(() => {
+          router.push("/my-profile");
         }, 2000);
       }
     } catch (error: any) {
@@ -158,7 +162,9 @@ export default function RegisterPage() {
   }, [error]);
 
   return (
-    <div className={`min-h-screen w-full relative bg-black flex items-center justify-center ${playfair.className}`}>
+    <div
+      className={`min-h-screen w-full relative bg-black flex items-center justify-center ${playfair.className}`}
+    >
       <div className="absolute inset-0 z-0">
         <Image
           src="/assets/auth/registerBg.png"

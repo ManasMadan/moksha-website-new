@@ -53,7 +53,7 @@ function EventCard({
                   TIME -
                 </span>
                 <span className="text-base @[250px]:text-lg truncate">
-                  {eventStartTime} - {eventEndTime}
+                  {eventStartTime} Onwards
                 </span>
 
                 <span className="text-lg @[250px]:text-xl font-bold uppercase text-left">
@@ -67,7 +67,7 @@ function EventCard({
                   VENUE -
                 </span>
                 <div className="overflow-hidden h-14">
-                  <p className="text-base @[250px]:text-lg line-clamp-2">
+                  <p className="text-base @[250px]:text-lg line-clamp-2 break-words">
                     {eventVenue}
                   </p>
                 </div>

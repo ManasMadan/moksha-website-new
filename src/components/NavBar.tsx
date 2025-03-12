@@ -22,10 +22,11 @@ const Navbar = () => {
 
   const navLinks = [
     { href: "/", label: "Home", isScrollLink: false },
+    { href: "About Us", label: "About Us", isScrollLink: true },
     { href: "/events", label: "Events", isScrollLink: false },
     /* { href: "/sponsor", label: "Sponsor" }, */
     { href: "/team", label: "Team", isScrollLink: false },
-    { href: "Timeline", label: "Timeline", isScrollLink: true },
+    // { href: "Timeline", label: "Timeline", isScrollLink: true },
     { href: "Footer", label: "Contact Us", isScrollLink: true }
   ];
 

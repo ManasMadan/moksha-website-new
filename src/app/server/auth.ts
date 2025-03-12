@@ -63,7 +63,7 @@ export async function registerUser(formData: FormData) {
       isProfileComplete: true,
     });
 
-    return { success: "Registration successful, please login" };
+    return { success: "Registration successful" };
   } catch (error: any) {
     console.error("Registration error:", error);
     return { error: error.message || "Registration failed" };
