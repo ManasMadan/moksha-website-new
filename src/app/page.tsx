@@ -97,7 +97,7 @@ export default function Home() {
           style={{
             backgroundImage: "url('/assets/home/section1Bg.png')",
             backgroundPositionX: "center",
-            backgroundSize: "100% 100%"
+            backgroundSize: "cover",
           }}
         >
           <div className="w-full">
@@ -122,7 +122,7 @@ export default function Home() {
 
             {isAnimating && <AnimatingLogo animatedLogoRef={animatedLogoRef} />}
 
-         {/*    <h1
+            {/*    <h1
               className={cn(
                 "text-5xl text-[#FFD58B] text-center mt-8 transition-all duration-1000 ease-in-out",
                 {
@@ -140,7 +140,7 @@ export default function Home() {
             "opacity-0": isAnimating,
             "opacity-100 transition-opacity duration-1000 delay-500":
               !isAnimating,
-          })}          
+          })}
         >
           <Element name="About Us">
             <AboutUs />
