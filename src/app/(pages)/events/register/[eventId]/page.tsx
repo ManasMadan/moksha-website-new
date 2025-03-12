@@ -198,9 +198,7 @@ const RegistrationForm = () => {
     setTeamMembers(newTeamMembers);
   };
 
-  // Modify the handleCustomInputChange function to validate when the type is email or phone
   const handleCustomInputChange = (inputId: string, value: string | File) => {
-    // Store the value first
     setCustomInputValues((prev) => ({
       ...prev,
       [inputId]: value,

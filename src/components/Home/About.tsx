@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function AboutUs() {
   return (
-    <div className="w-full py-48 bg-center bg-cover" style={{backgroundImage:"url('/assets/events/noise.png')"}}>
+    <div className="w-full pt-48 pb-24">
       <div className="py-36 text-center z-10 relative overflow-hidden">
         <h1 className="text-[#FFD58B] text-5xl uppercase z-20 relative">
           About Us

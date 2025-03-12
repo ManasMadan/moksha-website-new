@@ -49,7 +49,13 @@ export const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user, account }) {
+    async jwt({ token, user, account, trigger, session }) {
+      if (trigger === "update") {
+        if (session?.isProfileComplete !== undefined) {
+          token.isProfileComplete = session.isProfileComplete;
+        }
+      }
+
       if (user) {
         token.id = user.id;
         token.isProfileComplete = user.isProfileComplete;

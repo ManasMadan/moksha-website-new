@@ -24,23 +24,20 @@ let memoryCache: {
   timestamp: 0,
 };
 
-const CACHE_DURATION = 15 * 60 * 1000; // 15 minutes in milliseconds
+const CACHE_DURATION = 15 * 60 * 1000;
 const CACHE_KEY = 'leaderboard_data';
 
 export async function getLeaderboardData(): Promise<ILeaderboardResponse> {
   try {
-    // Check memory cache first
     if (memoryCache.data && Date.now() - memoryCache.timestamp < CACHE_DURATION) {
       console.log('Serving from memory cache');
       return { data: JSON.stringify(memoryCache.data), error: null, status: 'success' };
     }
 
-    // Try Vercel KV
     try {
       const cachedData = await kv.get<LeaderboardEntry[]>(CACHE_KEY);
       if (cachedData) {
         console.log('Serving from KV cache');
-        // Update memory cache
         memoryCache = {
           data: cachedData,
           timestamp: Date.now(),
@@ -51,11 +48,9 @@ export async function getLeaderboardData(): Promise<ILeaderboardResponse> {
       console.warn('KV cache unavailable:', kvError);
     }
 
-    // If no cache hit, fetch from Google Sheets
     console.log('Fetching from Google Sheets');
     const freshData = await fetchFromGoogleSheets();
 
-    // Update both caches
     try {
       await kv.set(CACHE_KEY, freshData, { ex: CACHE_DURATION / 1000 });
     } catch (kvError) {

@@ -93,11 +93,11 @@ export default function Home() {
 
       <div className="min-h-screen w-full bg-[#131313]">
         <section
-          className="relative flex flex-col min-h-screen bg-[#131313] w-full bg-contain bg-no-repeat pt-20"
+          className="relative flex flex-col min-h-screen bg-[#131313] w-full bg-cover bg-no-repeat pt-20"
           style={{
             backgroundImage: "url('/assets/home/section1Bg.png')",
             backgroundPositionX: "center",
-            backgroundSize: "100% 100%"
+            backgroundPositionY: "bottom",
           }}
         >
           <div className="w-full">
@@ -122,7 +122,7 @@ export default function Home() {
 
             {isAnimating && <AnimatingLogo animatedLogoRef={animatedLogoRef} />}
 
-         {/*    <h1
+            {/*    <h1
               className={cn(
                 "text-5xl text-[#FFD58B] text-center mt-8 transition-all duration-1000 ease-in-out",
                 {
@@ -140,14 +140,14 @@ export default function Home() {
             "opacity-0": isAnimating,
             "opacity-100 transition-opacity duration-1000 delay-500":
               !isAnimating,
-          })}          
+          })}
         >
           <Element name="About Us">
             <AboutUs />
           </Element>
         </div>
 
-        <section className="relative flex flex-col min-h-screen bg-[#131313] w-full pt-40 z-40">
+        <section className="relative flex flex-col min-h-screen bg-[#131313] w-full z-40">
           <Gallery />
           <AfterMovie />
           <PastSponsor />

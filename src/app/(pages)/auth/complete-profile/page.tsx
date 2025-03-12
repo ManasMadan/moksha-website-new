@@ -3,16 +3,17 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { Loader2 } from "lucide-react";
-import { useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 import { completeSignup } from "@/app/server/auth";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 export default function CompleteSignupPage() {
   const router = useRouter();
-  
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const { data: session, update } = useSession();
 
   const [formData, setFormData] = useState({
     mobile: "",
@@ -72,29 +73,31 @@ export default function CompleteSignupPage() {
     e.preventDefault();
     setError("");
     setSuccess("");
-    
+
     if (!formData.mobile || !formData.collegeName || !formData.dob) {
       setError("All fields are required");
       return;
     }
-    
+
     setIsLoading(true);
-    
+
     try {
       const formDataObj = new FormData();
       Object.entries(formData).forEach(([key, value]) => {
         formDataObj.append(key, value);
       });
-      
+
       const result = await completeSignup(formDataObj);
-      
+
       if (result.error) {
         setError(result.error);
       } else if (result.success) {
         setSuccess(result.success);
-        signOut()
+        await update({
+          isProfileComplete: true,
+        });
         setTimeout(() => {
-          router.push("/auth/login");
+          router.push("/my-profile");
         }, 2000);
       }
     } catch (error: any) {
@@ -145,7 +148,6 @@ export default function CompleteSignupPage() {
           )}
 
           <form className="space-y-6" onSubmit={handleSubmit}>
-
             <div className="space-y-2">
               <label className="text-white uppercase text-sm font-semibold">
                 Mobile No.*
