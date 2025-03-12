@@ -67,11 +67,11 @@ export default function Gallery({
           <img
             alt="Gallery"
             src="/assets/home/gallery/text.png"
-            className="max-w-[min(70vw,70vh)] w-full max-h-full z-10"
+            className="max-w-[min(60vw,60vh)] w-full max-h-full z-10"
           />
 
-          <div className="border-[#FFD58B] border-2 max-w-[min(75vh,75vw)] max-h-[min(75vh,75vw)] w-full h-full aspect-square absolute"></div>
-          <div className="border-[#FFD58B] rotate-45 border-2 max-w-[min(75vh,75vw)] max-h-[min(75vh,75vw)] w-full h-full aspect-square absolute"></div>
+          <div className="border-[#FFD58B] border-2 max-w-[min(65vh,65vw)] max-h-[min(65vh,65vw)] w-full h-full aspect-square absolute"></div>
+          <div className="border-[#FFD58B] rotate-45 border-2 max-w-[min(65vh,65vw)] max-h-[min(65vh,65vw)] w-full h-full aspect-square absolute"></div>
         </div>
 
         <div className="relative z-10 pointer-events-none">

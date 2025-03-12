@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 
 const data = {
@@ -24,8 +24,12 @@ const Timeline = () => {
   const [responsiveValues, setResponsiveValues] = useState({
     itemSpacing: 20,
     yearSpacing: 7,
-    yearOffset: 10
+    yearOffset: 10,
   });
+  const [visibleItems, setVisibleItems] = useState<{ [key: string]: boolean }>(
+    {}
+  );
+  const timelineRef = useRef(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -33,19 +37,19 @@ const Timeline = () => {
         setResponsiveValues({
           itemSpacing: 12,
           yearSpacing: 5,
-          yearOffset: 7
+          yearOffset: 7,
         });
       } else if (window.innerWidth < 768) {
         setResponsiveValues({
           itemSpacing: 18,
           yearSpacing: 6,
-          yearOffset: 8
+          yearOffset: 8,
         });
       } else if (window.innerWidth < 1024) {
         setResponsiveValues({
           itemSpacing: 20,
           yearSpacing: 7,
-          yearOffset: 10
+          yearOffset: 10,
         });
       }
     };
@@ -53,7 +57,32 @@ const Timeline = () => {
     handleResize();
     window.addEventListener("resize", handleResize);
 
-    return () => window.removeEventListener("resize", handleResize);
+    // Setup intersection observer for animation
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // @ts-ignore
+            const itemId = entry.target.dataset.itemId;
+            setVisibleItems((prev) => ({ ...prev, [itemId]: true }));
+          }
+        });
+      },
+      { rootMargin: "0px 0px -100px 0px", threshold: 0.1 }
+    );
+
+    // Observe all timeline items after they're rendered
+    setTimeout(() => {
+      const items = document.querySelectorAll(".timeline-item-container");
+      items.forEach((item) => {
+        observer.observe(item);
+      });
+    }, 100);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      observer.disconnect();
+    };
   }, []);
 
   const { itemSpacing, yearSpacing, yearOffset } = responsiveValues;
@@ -67,7 +96,10 @@ const Timeline = () => {
     totalItems * itemSpacing + Object.keys(data).length * yearSpacing + 5;
 
   return (
-    <div className="min-h-screen bg-[#131313] px-8 pt-8 pb-44 relative" id="Timeline">
+    <div
+      className="min-h-screen bg-[#131313] px-8 pt-8 pb-44 relative"
+      id="Timeline"
+    >
       <div className="absolute left-10 top-0 w-[0.8px] h-full bg-[#FFFFFF] invisible md:visible" />
       <div className="absolute right-10 top-0 w-[0.8px] h-full bg-[#FFFFFF] invisible md:visible" />
       <div className="absolute right-14 top-0 w-[0.8px] h-full bg-[#FFFFFF] invisible md:visible" />
@@ -80,7 +112,7 @@ const Timeline = () => {
           priority
         />
       </div>
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-4xl mx-auto" ref={timelineRef}>
         <h1 className="text-white text-5xl md:text-6xl lg:text-7xl text-center my-10 font-serif tracking-wider font-semibold relative z-30">
           TIMELINE
         </h1>
@@ -145,11 +177,13 @@ const Timeline = () => {
                     const itemPosition =
                       yearPosition + yearOffset + itemIndex * itemSpacing;
                     const isEvenItem = itemIndex % 2 === 0;
+                    const itemId = `${year}-${itemIndex}`;
+                    const isVisible = visibleItems[itemId];
 
                     return (
                       <div
                         key={`${year}-${itemIndex}`}
-                        className="absolute left-1/2"
+                        className="absolute left-1/2 timeline-item"
                         style={{
                           top: `${itemPosition}rem`,
                         }}
@@ -159,10 +193,17 @@ const Timeline = () => {
                         </div>
 
                         <div
-                          className={`absolute flex items-center justify-center z-10 -top-[40px] sm:-top-[62px] md:-top-[92px] ${
+                          data-item-id={itemId}
+                          className={`absolute timeline-item-container flex items-center justify-center z-10 -top-[40px] sm:-top-[62px] md:-top-[92px] ${
                             isEvenItem
                               ? "-translate-x-[calc(100%)] scale-100"
                               : "scale-x-[-1]"
+                          } transition-all duration-700 ease-out ${
+                            isVisible
+                              ? "opacity-100"
+                              : isEvenItem
+                              ? "opacity-0 -translate-x-[calc(130%)]"
+                              : "opacity-0 translate-x-[30%]"
                           }`}
                         >
                           <div className="md:w-60 w-24 sm:w-40 h-28 sm:h-44 md:h-64 border-2 border-[#b8860b] bg-black">
