@@ -85,7 +85,7 @@ const TeamPage: React.FC = () => {
     {
       name: "MANAS MADAN",
       position: "",
-      imageUrl: "/assets/team/member/MANAS.png",
+      imageUrl: "/assets/team/member/MANAS.webp",
     },
     {
       name: "AJAY PAL SINGH",
@@ -147,7 +147,7 @@ const TeamPage: React.FC = () => {
         className="absolute inset-0 z-0 bg-contain bg-no-repeat bg-blend-screen"
         style={{
           backgroundImage: "url('/assets/team/bg.jpeg')",
-          backgroundPositionX: "center",        
+          backgroundPositionX: "center",
           opacity: "0.8",
         }}
       />
