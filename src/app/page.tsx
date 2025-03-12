@@ -43,25 +43,27 @@ export default function Home() {
 
   const [styleStateIndex, setStyleStateIndex] = useState(0);
   // New state for background image opacity
-  const [bgOpacity, setBgOpacity] = useState(0);
+  const bgOpacity = styleStateIndex === styleStates.length - 1 ? 1 : 0;
+  const isAnimating = styleStateIndex < styleStates.length - 1;
 
   useEffect(() => {
     setTimeout(() => {
       setStyleStateIndex((prev) => prev + 1);
       setTimeout(() => {
         setStyleStateIndex((prev) => prev + 1);
-        setTimeout(() => {
-          setBgOpacity(1);
-        }, 1000);
       }, 1500);
     }, 1000);
   }, []);
 
   return (
-    <div>
+    <div className={cn({ "overflow-hidden h-screen": isAnimating })}>
       <div
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-1000 ease-in-out"
+          "fixed top-0 left-0 right-0 z-50 transition-all duration-1000 ease-in-out",
+          {
+            "opacity-0 -translate-y-full": isAnimating,
+            "opacity-100 translate-y-0": !isAnimating,
+          }
         )}
       >
         <Navbar />
@@ -77,6 +79,7 @@ export default function Home() {
               backgroundPositionX: "center",
               backgroundPositionY: "bottom",
               opacity: bgOpacity,
+              transitionDelay: "1s",
             }}
           />
 
